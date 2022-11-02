@@ -1,0 +1,48 @@
+@startuml
+class Main
+Main *-- programControl
+programControl *-- FileHandling
+FileHandling <|-- startMenu
+programControl *-- mainMenu
+programControl *-- User
+mainMenu *-- FileHandling
+FileHandling <|-- AMedia
+AMedia <|-- Movies
+AMedia <|-- Series
+
+class programControl{
++ static currentUser
++ runProgram()
++ getCurrentUser()
++ setCurrentUser(User user)
+}
+
+class startMenu{
++
+}
+
+class mainMenu{
+
+}
+
+abstract class AMedia{
+
+}
+
+class Movies{
+
+}
+
+class Series{
+
+}
+
+class User{
+
+}
+
+interface FileHandling{
+
+}
+
+@enduml
