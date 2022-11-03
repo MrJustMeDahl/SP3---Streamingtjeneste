@@ -12,12 +12,13 @@ AMedia <|-- Series
 
 class ProgramControl{
 + ArrayList<User> allUsers
-+ ArrayList<AMedia allMedia
++ ArrayList<AMedia> allMedia
 + static User currentUser
 + static Scanner userInput
 + runProgram()
 + getCurrentUser()
 + setCurrentUser(User user)
++ getAllMedia()
 }
 
 class StartMenu{
@@ -30,6 +31,7 @@ class MainMenu{
 + runMainMenu()
 - suggestedMedia()
 - searchEngine()
+- logOut()
 }
 
 abstract class AMedia{
