@@ -1,48 +1,73 @@
 @startuml
 class Main
-Main *-- programControl
-programControl *-- FileHandling
-FileHandling <|-- startMenu
-programControl *-- mainMenu
-programControl *-- User
-mainMenu *-- FileHandling
-FileHandling <|-- AMedia
-AMedia <|-- Movies
+Main *-- FileHandling
+FileHandling <|-- ProgramControl
+ProgramControl *-- StartMenu
+ProgramControl *-- MainMenu
+ProgramControl *-- User
+
+MainMenu *-- AMedia
+AMedia <|-- Movie
 AMedia <|-- Series
 
-class programControl{
-+ static currentUser
+class ProgramControl{
++ ArrayList<User> allUsers
++ ArrayList<AMedia allMedia
++ static User currentUser
++ static Scanner userInput
 + runProgram()
 + getCurrentUser()
 + setCurrentUser(User user)
 }
 
-class startMenu{
-+
+class StartMenu{
++ runStartMenu()
+- login()
+- createNewUser()
 }
 
-class mainMenu{
-
+class MainMenu{
++ runMainMenu()
+- suggestedMedia()
+- searchEngine()
 }
 
 abstract class AMedia{
-
+- String name
+- String category
+- float rating
+- int releaseYear
++ AMedia(String name, String category, float rating, int releaseYear)
++ abstract playMedia()
 }
 
-class Movies{
-
+class Movie{
++ Movie (String name, String category, float rating, int releaseYear)
 }
 
 class Series{
-
+- int season
+- int episode
++ Series (String name, String category, float rating, int releaseYear, int season, int episode)
 }
 
 class User{
-
+- String userName
+- String password
+- int age
+- ArrayList<AMedia> watchedMedia
+- ArrayList<AMedia> savedMedia
++ User(String userName, String password, int age)
++ getWatchedMedia()
++ getSavedMedia()
++ addSavedMedia(AMedia)
++ removeSavedMedia(AMedia)
++ addWatchedMedia(AMedia)
 }
 
 interface FileHandling{
-
++ readFromFile()
++ writeToFile()
 }
 
 @enduml
