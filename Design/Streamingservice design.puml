@@ -22,12 +22,16 @@ class ProgramControl{
 }
 
 class StartMenu{
++ StartMenu(ArrayList<User> allUsers)
 + runStartMenu()
 - login()
 - createNewUser()
+- checkUserData()
+- saveUserData()
 }
 
 class MainMenu{
++ MainMenu(ArrayList<AMedia> allMedia)
 + runMainMenu()
 - suggestedMedia()
 - searchEngine()
