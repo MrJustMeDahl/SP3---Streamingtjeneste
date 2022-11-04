@@ -26,6 +26,8 @@ class StartMenu{
 + runStartMenu()
 - login()
 - createNewUser()
+- checkUserData()
+- saveUserData()
 }
 
 class MainMenu{
