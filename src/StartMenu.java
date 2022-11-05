@@ -1,11 +1,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+Make usefull Constructors
+Fix User problem, createNewUser should return a user
+Make a checkUserData
+Make a saveUserData
+ */
+
+
 public class StartMenu {
   private static final Scanner scanner = new Scanner(System.in);
   String currentUser;
 
-public String StartMenu(ArrayList<User> AllUsers){
+ StartMenu (ArrayList<User> AllUsers){
 
 }
 
@@ -19,7 +27,7 @@ public String runStartMenu(String currentUser){
       return this.login();
     }
     if ("2".equals (answer)){
-      return this.createNewUser();
+      return this.makeNewUser();
     }
     System.out.println("The key you have pressed doesn't exist");
     System.out.println("Try again: ");
@@ -51,7 +59,7 @@ return currentUser;
 
 }
 //Create a new user
-private String createNewUser(String aNewUser){
+private makeNewUser createNewUser(makeNewUser aNewUser){
   System.out.println("Please enter a Username: ");
   String userName = scanner.nextLine();
   System.out.println("Please enter a Password: ");
