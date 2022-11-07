@@ -14,18 +14,23 @@ public class ProgramControl {
     }
 
     public void runProgram(){
-        ArrayList<AMedia> movieList = readFromMovieFile("Data/MovieData");
-        ArrayList<AMedia> seriesList = readFromSeriesFile("Data/SeriesData");
+        ArrayList<AMedia> movieList = readFromMovieFile("Data/MovieData.txt");
+        ArrayList<AMedia> seriesList = readFromSeriesFile("Data/SeriesData.txt");
         for(AMedia m: movieList){
             allMedia.add(m);
         }
         for(AMedia m: seriesList){
             allMedia.add(m);
         }
+        allUsers = readFromUserFile("Data/UserData.txt");
 
         StartMenu startMenu = new StartMenu(allUsers);
         currentUser = startMenu.runStartMenu();
 
+        MainMenu mainMenu = new MainMenu(allMedia);
+        mainMenu.runMainMenu();
+
+        writeToFile();
 
     }
 
@@ -46,7 +51,8 @@ public class ProgramControl {
                 String mediaName = separatedInput[0];
                 int mediaReleaseYear = Integer.parseInt(separatedInput[1]);
                 String mediaCategory = separatedInput[2];
-                float mediaRating = Float.parseFloat(separatedInput[3]);
+                String ratingReadyForParse = separatedInput[3].replace(',','.');
+                float mediaRating = Float.parseFloat(ratingReadyForParse);
                 AMedia media = new Movie(mediaName, mediaReleaseYear, mediaCategory, mediaRating);
                 mediaFromFiles.add(media);
             } while (scanMovies.hasNextLine());
@@ -73,7 +79,8 @@ public class ProgramControl {
                     mediaReleaseYearTill = Integer.parseInt(separateYear[1]);
                 }
                 String mediaCategory = separatedInput[2];
-                float mediaRating = Float.parseFloat(separatedInput[3]);
+                String ratingReadyForParse = separatedInput[3].replace(',','.');
+                float mediaRating = Float.parseFloat(ratingReadyForParse);
                 String[] separateSeasons = separatedInput[4].split(", ");
                 for(int i = 0; i < separateSeasons.length; i++){
                     String[] separateEpisodes = separateSeasons[i].split("-");
@@ -89,6 +96,45 @@ public class ProgramControl {
             System.out.println("Failed to load series data.");
         }
         return mediaFromFiles;
+    }
+
+    private ArrayList<User> readFromUserFile(String path){
+        ArrayList<User> usersFromFile = new ArrayList<User>();
+        File userFile = new File(path);
+        try {
+            Scanner scanUsers = new Scanner(userFile);
+            scanUsers.nextLine();
+            do{
+                String input = scanUsers.nextLine();
+                String[] separatedInput = input.split("; ");
+                String username = separatedInput[0];
+                String password = separatedInput[1];
+                int age = Integer.parseInt(separatedInput[2]);
+                String[] separatedWatchedMedia = separatedInput[3].split(", ");
+                ArrayList<AMedia> watchedMedia = new ArrayList<AMedia>();
+                for(int i = 0; i < separatedWatchedMedia.length; i++){
+                    for(AMedia m: allMedia){
+                        if(m.getName.equals(separatedWatchedMedia[i])){
+                            watchedMedia.add(m);
+                        }
+                    }
+                }
+                String[] separatedSavedMedia = separatedInput[4].split(", ");
+                ArrayList<AMedia> savedMedia = new ArrayList<AMedia>();
+                for(int i = 0; i < separatedSavedMedia.length; i++){
+                    for(AMedia m: allMedia){
+                        if(m.getName.equals(separatedSavedMedia[i])){
+                            savedMedia.add(m);
+                        }
+                    }
+                }
+                User user = new User(username, password, age, watchedMedia, savedMedia);
+                usersFromFile.add(user);
+            } while(scanUsers.hasNextLine());
+        } catch (FileNotFoundException e){
+            System.out.println("Failed to load user data.");
+        }
+        return usersFromFile;
     }
 
     public void writeToFile(){
