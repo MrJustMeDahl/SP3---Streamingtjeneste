@@ -28,6 +28,9 @@ public class ProgramControl {
 
         StartMenu startMenu = new StartMenu(allUsers);
         currentUser = startMenu.runStartMenu();
+        if(!allUsers.contains(currentUser)){
+            allUsers.add(currentUser);
+        }
 
         MainMenu mainMenu = new MainMenu(allMedia);
         mainMenu.runMainMenu();
