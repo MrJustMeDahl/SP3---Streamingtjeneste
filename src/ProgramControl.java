@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,7 +32,7 @@ public class ProgramControl {
         MainMenu mainMenu = new MainMenu(allMedia);
         mainMenu.runMainMenu();
 
-        writeToFile();
+        writeToUserFile("Data/UserData.txt");
 
     }
 
@@ -137,7 +139,25 @@ public class ProgramControl {
         return usersFromFile;
     }
 
-    public void writeToFile(){
+    public void writeToUserFile(String path){
+        File userFile = new File(path);
+        try{
+            FileWriter writer = new FileWriter(userFile);
+            writer.write("username; password; age; watchedmedia; savedmedia;");
+            for(User u: allUsers){
+                String watchedMedia = "";
+                String savedMedia = "";
+                for(AMedia m: u.getWatchedMedia){
+                    watchedMedia += m.getName() + ", ";
+                }
+                for(AMedia s: u.getSavedMedia){
+                    savedMedia += s.getName() + ", ";
+                }
+                writer.write(u.getUsername + "; " + u.getPassword + "; " + u.getAge + "; " + watchedMedia + "; " + savedMedia + ";\n");
+            }
+        }catch (IOException ex){
+            System.out.println("Failed to save user data.");
+        }
 
     }
 }
