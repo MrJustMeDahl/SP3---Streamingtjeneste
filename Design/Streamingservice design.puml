@@ -1,7 +1,6 @@
 @startuml
 class Main
-Main *-- FileHandling
-FileHandling <|-- ProgramControl
+Main <|-- ProgramControl
 ProgramControl *-- StartMenu
 ProgramControl *-- MainMenu
 ProgramControl *-- User
@@ -15,27 +14,29 @@ class ProgramControl{
 + ArrayList<AMedia> allMedia
 + static User currentUser
 + static Scanner userInput
-+ runProgram()
-+ getCurrentUser()
-+ setCurrentUser(User user)
-+ getAllMedia()
++ void runProgram()
++ void setCurrentUser(User user)
++ ArrayList<AMedia> getAllMedia()
+- ArrayList<AMedia> readFromMovieFile(String path)
+- ArrayList<AMedia> readFromSeriesFile(String path)
+- ArrayList<User> readFromUserFile(String path)
+- void writeToUserFile(String path)
 }
 
 class StartMenu{
 + StartMenu(ArrayList<User> allUsers)
-+ runStartMenu()
-- login()
-- createNewUser()
-- checkUserData()
-- saveUserData()
++ User runStartMenu()
+- User login()
+- User createNewUser()
+- boolean checkUserData()
 }
 
 class MainMenu{
 + MainMenu(ArrayList<AMedia> allMedia)
-+ runMainMenu()
-- suggestedMedia()
-- searchEngine()
-- logOut()
++ void runMainMenu()
+- String[3] suggestedMedia()
+- void searchEngine()
+- void logOut()
 }
 
 abstract class AMedia{
@@ -44,17 +45,20 @@ abstract class AMedia{
 - float rating
 - int releaseYear
 + AMedia(String name, String category, float rating, int releaseYear)
-+ abstract playMedia()
++ abstract void playMedia()
 }
 
 class Movie{
 + Movie (String name, String category, float rating, int releaseYear)
++ void playMedia()
 }
 
 class Series{
 - int season
 - int episode
+- int endYear
 + Series (String name, String category, float rating, int releaseYear, int season, int episode)
++ void playMedia()
 }
 
 class User{
@@ -64,11 +68,14 @@ class User{
 - ArrayList<AMedia> watchedMedia
 - ArrayList<AMedia> savedMedia
 + User(String userName, String password, int age)
-+ getWatchedMedia()
-+ getSavedMedia()
-+ addSavedMedia(AMedia)
-+ removeSavedMedia(AMedia)
-+ addWatchedMedia(AMedia)
++ String getUsername()
++ String getPassword()
++ int getAge()
++ ArrayList<AMedia> getWatchedMedia()
++ ArrayList<AMedia> getSavedMedia()
++ void addSavedMedia(AMedia)
++ void removeSavedMedia(AMedia)
++ void addWatchedMedia(AMedia)
 }
 
 interface FileHandling{
