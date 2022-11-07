@@ -41,7 +41,7 @@ public class ProgramControl {
         this.currentUser = currentUser;
     }
 
-    public ArrayList<AMedia> readFromMovieFile(String path){
+    private ArrayList<AMedia> readFromMovieFile(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<AMedia>();
         File file = new File(path);
         try {
@@ -64,7 +64,7 @@ public class ProgramControl {
         return mediaFromFiles;
     }
 
-    public ArrayList<AMedia> readFromSeriesFile(String path){
+    private ArrayList<AMedia> readFromSeriesFile(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<AMedia>();
         File file = new File(path);
         try {
@@ -139,7 +139,7 @@ public class ProgramControl {
         return usersFromFile;
     }
 
-    public void writeToUserFile(String path){
+    private void writeToUserFile(String path){
         File userFile = new File(path);
         try{
             FileWriter writer = new FileWriter(userFile);

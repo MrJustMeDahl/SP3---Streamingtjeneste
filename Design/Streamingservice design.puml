@@ -1,7 +1,6 @@
 @startuml
 class Main
-Main *-- FileHandling
-FileHandling <|-- ProgramControl
+Main <|-- ProgramControl
 ProgramControl *-- StartMenu
 ProgramControl *-- MainMenu
 ProgramControl *-- User
@@ -16,9 +15,12 @@ class ProgramControl{
 + static User currentUser
 + static Scanner userInput
 + runProgram()
-+ getCurrentUser()
 + setCurrentUser(User user)
 + getAllMedia()
+- readFromMovieFile()
+- readFromSeriesFile()
+- readFromUserFile()
+- writeToUserFile()
 }
 
 class StartMenu{
@@ -49,12 +51,15 @@ abstract class AMedia{
 
 class Movie{
 + Movie (String name, String category, float rating, int releaseYear)
++ playMedia()
 }
 
 class Series{
 - int season
 - int episode
+- int endYear
 + Series (String name, String category, float rating, int releaseYear, int season, int episode)
++ playMedia()
 }
 
 class User{
@@ -64,6 +69,9 @@ class User{
 - ArrayList<AMedia> watchedMedia
 - ArrayList<AMedia> savedMedia
 + User(String userName, String password, int age)
++ getUsername()
++ getPassword()
++ getAge()
 + getWatchedMedia()
 + getSavedMedia()
 + addSavedMedia(AMedia)
