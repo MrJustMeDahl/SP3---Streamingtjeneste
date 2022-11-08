@@ -113,7 +113,7 @@ public class ProgramControl {
                 ArrayList<AMedia> watchedMedia = new ArrayList<AMedia>();
                 for(int i = 0; i < separatedWatchedMedia.length; i++){
                     for(AMedia m: allMedia){
-                        if(m.getName.equals(separatedWatchedMedia[i])){
+                        if(m.getName().equals(separatedWatchedMedia[i])){
                             watchedMedia.add(m);
                         }
                     }
@@ -122,7 +122,7 @@ public class ProgramControl {
                 ArrayList<AMedia> savedMedia = new ArrayList<AMedia>();
                 for(int i = 0; i < separatedSavedMedia.length; i++){
                     for(AMedia m: allMedia){
-                        if(m.getName.equals(separatedSavedMedia[i])){
+                        if(m.getName().equals(separatedSavedMedia[i])){
                             savedMedia.add(m);
                         }
                     }
