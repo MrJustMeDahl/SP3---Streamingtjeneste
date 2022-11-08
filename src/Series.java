@@ -2,9 +2,14 @@ public class Series extends AMedia{
 
     int episode;
     int season;
-    Series(String name, String category, float rating, int releaseYear, int season, int episode) {
+    int endYear;
+    Series(String name, String category, float rating, int releaseYear, int season, int episode, int endYear) {
 
-        super("name", "category", rating, releaseYear, season, episode);
+        super(name, category, rating, releaseYear);
+        this.season = season;
+        this.episode = episode;
+        this.endYear = endYear;
+
     }
 
 

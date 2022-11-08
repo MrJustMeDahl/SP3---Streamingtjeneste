@@ -45,6 +45,7 @@ abstract class AMedia{
 - int releaseYear
 + AMedia(String name, String category, float rating, int releaseYear)
 + abstract void playMedia()
++ getter()
 }
 
 class Movie{
