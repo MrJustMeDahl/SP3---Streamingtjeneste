@@ -10,7 +10,6 @@ public class ProgramControl {
     private ArrayList<User> allUsers = new ArrayList<>(User);
     private ArrayList<AMedia> allMedia = new ArrayList<>(AMedia);
     public static User currentUser;
-    public static Scanner userInput = new Scanner(System.in);
 
     public ProgramControl(){
     }
@@ -37,11 +36,6 @@ public class ProgramControl {
 
         writeToUserFile("Data/UserData.txt");
 
-    }
-
-
-    public void setCurrentUser(User currentUser){
-        this.currentUser = currentUser;
     }
 
     private ArrayList<AMedia> readFromMovieFile(String path){

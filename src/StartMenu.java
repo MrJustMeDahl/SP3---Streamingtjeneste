@@ -40,7 +40,7 @@ private User login(){
   System.out.println("or press 'q' to quit");
   String name = scanner.nextLine();
  for(User u:allUsers){
-   if (u.getName.equals(name) ) {
+   if (u.getUsername.equals(name) ) {
      System.out.println("Please enter your Password: ");
      String Password = scanner.nextLine();
      if (Password.equalsIgnoreCase("q")) {
