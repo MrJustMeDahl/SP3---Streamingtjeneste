@@ -52,7 +52,7 @@ public class MainMenu {
         AMedia suggestion1 = listOfMediaFromCategory.get(randomMediaFromList);
         System.out.println("We have found these options you might like: ");
         System.out.println("1 - " + suggestion1);
-
+        
 
     }
 
