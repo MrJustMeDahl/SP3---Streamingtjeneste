@@ -52,7 +52,7 @@ public class ProgramControl {
                 String mediaCategory = separatedInput[2];
                 String ratingReadyForParse = separatedInput[3].replace(',','.');
                 float mediaRating = Float.parseFloat(ratingReadyForParse);
-                AMedia media = new Movie(mediaName, mediaReleaseYear, mediaCategory, mediaRating);
+                AMedia media = new Movie(mediaName, mediaCategory, mediaRating, mediaReleaseYear);
                 mediaFromFiles.add(media);
             } while (scanMovies.hasNextLine());
         } catch(FileNotFoundException e){
@@ -144,13 +144,13 @@ public class ProgramControl {
             for(User u: allUsers){
                 String watchedMedia = "";
                 String savedMedia = "";
-                for(AMedia m: u.getWatchedMedia){
+                for(AMedia m: u.getWatchedMedia()){
                     watchedMedia += m.getName() + ", ";
                 }
-                for(AMedia s: u.getSavedMedia){
+                for(AMedia s: u.getSavedMedia()){
                     savedMedia += s.getName() + ", ";
                 }
-                writer.write(u.getUsername + "; " + u.getPassword + "; " + u.getAge + "; " + watchedMedia + "; " + savedMedia + ";\n");
+                writer.write(u.getUsername() + "; " + u.getPassword() + "; " + u.getAge() + "; " + watchedMedia + "; " + savedMedia + ";\n");
             }
         }catch (IOException ex){
             System.out.println("Failed to save user data.");
