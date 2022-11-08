@@ -1,9 +1,9 @@
 public abstract class AMedia {
 
-    private String name;
-    private String category;
-    private float rating;
-    private int releaseYear;
+    protected String name;
+    protected String category;
+    protected float rating;
+    protected int releaseYear;
 
     AMedia(String name, String category, float rating, int releaseYear){
         this.name = name;
@@ -29,4 +29,7 @@ public abstract class AMedia {
     public int getReleaseYear() {
         return releaseYear;
     }
+    abstract protected void playMedia(AMedia media);
+
+
 }
