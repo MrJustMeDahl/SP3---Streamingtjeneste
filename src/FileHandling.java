@@ -67,7 +67,7 @@ public class FileHandling {
     }
 
     public static ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia){
-        ArrayList<User> usersFromFile = new ArrayList<User>();
+        ArrayList<User> usersFromFile = new ArrayList<>();
         File userFile = new File(path);
         try {
             Scanner scanUsers = new Scanner(userFile);
