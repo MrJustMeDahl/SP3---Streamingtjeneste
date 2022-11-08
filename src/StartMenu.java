@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 
 public class StartMenu {
-ArrayList<User> allUsers = new ArrayList<User>();
+ArrayList<User> allUsers = new ArrayList<>();
 Scanner scanner = new Scanner(System.in);
 
 public StartMenu(ArrayList<User> allUsers){
@@ -28,9 +28,6 @@ public User runStartMenu(){
     System.out.println("The key you have pressed doesn't exist");
     System.out.println("Try again: ");
   }
-  User dummyuser = runStartMenu();
-
-  return dummyuser;
 }
 //******
 //Set user, or return to loginscreen
@@ -40,14 +37,14 @@ private User login(){
   System.out.println("or press 'q' to quit");
   String name = scanner.nextLine();
  for(User u:allUsers){
-   if (u.getUsername.equals(name) ) {
+   if (u.getUsername().equals(name) ) {
      System.out.println("Please enter your Password: ");
      String Password = scanner.nextLine();
      if (Password.equalsIgnoreCase("q")) {
        name = "q";
        break;
      }
-     if (u.getPassword.equals(Password)){
+     if (u.getPassword().equals(Password)){
        return u;
      }
      System.out.println("you have entered an unknown Password: ");

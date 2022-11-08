@@ -32,8 +32,8 @@ public class MainMenu {
     }
 
     private void suggestedMedia(){
-        AMedia lastPlayedMedia = ProgramControl.currentUser.getWatchedMedia.get(size-1);
-        String lastPlayedCategory = lastPlayedMedia.getCategory;
+        AMedia lastPlayedMedia = ProgramControl.currentUser.getWatchedMedia().get(ProgramControl.currentUser.getWatchedMedia().size()-1);
+        String lastPlayedCategory = lastPlayedMedia.getCategory();
         String[] lastPlayedCategories = lastPlayedCategory.split(", ");
         Random rnd = new Random();
         int randomCategory = rnd.nextInt(0,lastPlayedCategories.length);
@@ -44,7 +44,7 @@ public class MainMenu {
         String chosenCategoryThree = lastPlayedCategories[randomCategory];
         ArrayList<AMedia> listOfMediaFromCategory = new ArrayList<>();
         for(AMedia m: allMedia) {
-            if(m.getCategory.contains(chosenCategoryOne)){
+            if(m.getCategory().contains(chosenCategoryOne)){
                 listOfMediaFromCategory.add(m);
             }
         }
