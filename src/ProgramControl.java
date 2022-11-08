@@ -39,7 +39,7 @@ public class ProgramControl {
     }
 
     private ArrayList<AMedia> readFromMovieFile(String path){
-        ArrayList<AMedia> mediaFromFiles = new ArrayList<AMedia>();
+        ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
         try {
             Scanner scanMovies = new Scanner(file);
@@ -62,7 +62,7 @@ public class ProgramControl {
     }
 
     private ArrayList<AMedia> readFromSeriesFile(String path){
-        ArrayList<AMedia> mediaFromFiles = new ArrayList<AMedia>();
+        ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
         try {
             Scanner scanMedia = new Scanner(file);
@@ -110,7 +110,7 @@ public class ProgramControl {
                 String password = separatedInput[1];
                 int age = Integer.parseInt(separatedInput[2]);
                 String[] separatedWatchedMedia = separatedInput[3].split(", ");
-                ArrayList<AMedia> watchedMedia = new ArrayList<AMedia>();
+                ArrayList<AMedia> watchedMedia = new ArrayList<>();
                 for(int i = 0; i < separatedWatchedMedia.length; i++){
                     for(AMedia m: allMedia){
                         if(m.getName().equals(separatedWatchedMedia[i])){
@@ -119,7 +119,7 @@ public class ProgramControl {
                     }
                 }
                 String[] separatedSavedMedia = separatedInput[4].split(", ");
-                ArrayList<AMedia> savedMedia = new ArrayList<AMedia>();
+                ArrayList<AMedia> savedMedia = new ArrayList<>();
                 for(int i = 0; i < separatedSavedMedia.length; i++){
                     for(AMedia m: allMedia){
                         if(m.getName().equals(separatedSavedMedia[i])){
