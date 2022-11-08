@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class ProgramControl {
 
-    private ArrayList<User> allUsers = new ArrayList<>(User);
-    private ArrayList<AMedia> allMedia = new ArrayList<>(AMedia);
+    private ArrayList<User> allUsers = new ArrayList<>();
+    private ArrayList<AMedia> allMedia = new ArrayList<>();
     public static User currentUser;
 
     public ProgramControl(){
@@ -86,7 +86,7 @@ public class ProgramControl {
                     int season = Integer.parseInt(separateEpisodes[0]);
                     int numberOfEpisodes = Integer.parseInt(separateEpisodes[1]);
                     for(int episode = 1; episode <= numberOfEpisodes; episode++){
-                        AMedia media = new Series(mediaName, mediaReleaseYearFrom, mediaReleaseYearTill, mediaCategory, mediaRating, season, episode);
+                        AMedia media = new Series(mediaName, mediaCategory, mediaRating, mediaReleaseYearFrom, season, episode, mediaReleaseYearTill);
                         mediaFromFiles.add(media);
                     }
                 }
