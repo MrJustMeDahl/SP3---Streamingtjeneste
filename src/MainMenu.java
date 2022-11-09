@@ -32,46 +32,51 @@ public class MainMenu {
         }
     }
 
-    private void suggestedMedia(){
-        //Finding the last played media from the current user.
-        AMedia lastPlayedMedia = ProgramControl.currentUser.getWatchedMedia().get(ProgramControl.currentUser.getWatchedMedia().size()-1);
-        //Finding the category/categories of the last played media and picking a random category between them.
-        String lastPlayedCategory = lastPlayedMedia.getCategory();
-        String[] lastPlayedCategories = lastPlayedCategory.split(", ");
+    private void suggestedMedia() {
+        AMedia suggestion1 = allMedia.get(rnd.nextInt(0, allMedia.size()));
+        AMedia suggestion2 = allMedia.get(rnd.nextInt(0, allMedia.size()));
+        AMedia suggestion3 = allMedia.get(rnd.nextInt(0, allMedia.size()));
+            if(ProgramControl.currentUser.getWatchedMedia().size() > 0) {
+                //Finding the last played media from the current user.
+                AMedia lastPlayedMedia = ProgramControl.currentUser.getWatchedMedia().get(ProgramControl.currentUser.getWatchedMedia().size() - 1);
+                //Finding the category/categories of the last played media and picking a random category between them.
+                String lastPlayedCategory = lastPlayedMedia.getCategory();
+                String[] lastPlayedCategories = lastPlayedCategory.split(", ");
 
-        String chosenCategory = getRandomCategory(lastPlayedCategories);
-        //Creating a list of media that has the same category as the randomly chosen categories, and picking a random media from the list. Do this for all 3 randomly chosen categories.
-        AMedia suggestion1 = getRandomMediaFromCategory(chosenCategory);
-        chosenCategory = getRandomCategory(lastPlayedCategories);
-        AMedia suggestion2 = getRandomMediaFromCategory(chosenCategory);
-        chosenCategory = getRandomCategory(lastPlayedCategories);
-        AMedia suggestion3 = getRandomMediaFromCategory(chosenCategory);
 
-        System.out.println("We have found these options you might like: ");
-        System.out.println("1 - " + suggestion1.getName() + ".");
-        System.out.println("2 - " + suggestion2.getName() + ".");
-        System.out.println("3 - " + suggestion3.getName() + ".");
-        System.out.println("4 - Go back to main menu." );
-        String userInput = scanner.nextLine().trim();
-        switch(userInput){
-            case "1":
-                suggestion1.chooseMedia();
-                break;
-            case "2":
-                suggestion2.chooseMedia();
-                break;
-            case "3":
-                suggestion3.chooseMedia();
-                break;
-            case "4":
-                runMainMenu();
-                break;
-            default:
-                System.out.println("The option you have entered does not exist.\nPlease try again.");
-                suggestedMedia();
+                String chosenCategory = getRandomCategory(lastPlayedCategories);
+                //Creating a list of media that has the same category as the randomly chosen categories, and picking a random media from the list. Do this for all 3 randomly chosen categories.
+                suggestion1 = getRandomMediaFromCategory(chosenCategory);
+                chosenCategory = getRandomCategory(lastPlayedCategories);
+                suggestion2 = getRandomMediaFromCategory(chosenCategory);
+                chosenCategory = getRandomCategory(lastPlayedCategories);
+                suggestion3 = getRandomMediaFromCategory(chosenCategory);
+            }
+
+            System.out.println("We have found these options you might like: ");
+            System.out.println("1 - " + suggestion1.getName() + ".");
+            System.out.println("2 - " + suggestion2.getName() + ".");
+            System.out.println("3 - " + suggestion3.getName() + ".");
+            System.out.println("4 - Go back to main menu.");
+            String userInput = scanner.nextLine().trim();
+            switch (userInput) {
+                case "1":
+                    suggestion1.chooseMedia();
+                    break;
+                case "2":
+                    suggestion2.chooseMedia();
+                    break;
+                case "3":
+                    suggestion3.chooseMedia();
+                    break;
+                case "4":
+                    runMainMenu();
+                    break;
+                default:
+                    System.out.println("The option you have entered does not exist.\nPlease try again.");
+                    suggestedMedia();
+            }
         }
-    }
-
     private AMedia getRandomMediaFromCategory(String category){
         ArrayList<AMedia> listOfMediaFromCategory = new ArrayList<>();
         for(AMedia m: allMedia) {
