@@ -1,3 +1,7 @@
+import org.w3c.dom.ls.LSOutput;
+
+import javax.naming.Name;
+
 public class Series extends AMedia{
 
     private int episode;
@@ -23,5 +27,14 @@ public class Series extends AMedia{
 
     public int getEndYear() {
         return endYear;
+    }
+
+    @Override
+    protected void playMedia(AMedia media) {
+        if (ProgramControl.currentUser.getSavedMedia().contains(media)){
+            ProgramControl.currentUser.removeSavedMedia(media);
+        }
+        ProgramControl.currentUser.addWatchedMedia(media);
+        System.out.println("You are now watching : " + name + "Episode : " + episode);
     }
 }
