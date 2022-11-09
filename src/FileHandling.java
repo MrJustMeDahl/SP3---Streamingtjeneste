@@ -19,7 +19,7 @@ public class FileHandling {
                 String mediaName = separatedInput[0];
                 int mediaReleaseYear = Integer.parseInt(separatedInput[1]);
                 String mediaCategory = separatedInput[2];
-                String ratingReadyForParse = separatedInput[3].replace(',','.');
+                String ratingReadyForParse = separatedInput[3].replace(',','.').replace(";", "");
                 float mediaRating = Float.parseFloat(ratingReadyForParse);
                 AMedia media = new Movie(mediaName, mediaCategory, mediaRating, mediaReleaseYear);
                 mediaFromFiles.add(media);
@@ -41,10 +41,10 @@ public class FileHandling {
                 String[] separatedInput = input.split("; ");
                 String mediaName = separatedInput[0];
                 String[] separateYear = separatedInput[1].split("-");
-                int mediaReleaseYearFrom = Integer.parseInt(separateYear[0]);
+                int mediaReleaseYearFrom = Integer.parseInt(separateYear[0].trim());
                 int mediaReleaseYearTill = 0;
                 if(!separateYear[1].equals(" ")){
-                    mediaReleaseYearTill = Integer.parseInt(separateYear[1]);
+                    mediaReleaseYearTill = Integer.parseInt(separateYear[1].trim());
                 }
                 String mediaCategory = separatedInput[2];
                 String ratingReadyForParse = separatedInput[3].replace(',','.');
@@ -52,8 +52,8 @@ public class FileHandling {
                 String[] separateSeasons = separatedInput[4].split(", ");
                 for(int i = 0; i < separateSeasons.length; i++){
                     String[] separateEpisodes = separateSeasons[i].split("-");
-                    int season = Integer.parseInt(separateEpisodes[0]);
-                    int numberOfEpisodes = Integer.parseInt(separateEpisodes[1]);
+                    int season = Integer.parseInt(separateEpisodes[0].trim());
+                    int numberOfEpisodes = Integer.parseInt(separateEpisodes[1].replace(";", "").trim());
                     for(int episode = 1; episode <= numberOfEpisodes; episode++){
                         AMedia media = new Series(mediaName, mediaCategory, mediaRating, mediaReleaseYearFrom, season, episode, mediaReleaseYearTill);
                         mediaFromFiles.add(media);
@@ -87,12 +87,12 @@ public class FileHandling {
                         }
                     }
                 }
-                String[] separatedSavedMedia = separatedInput[4].split(", ");
+                String[] separatedSavedMedia = separatedInput[4].replace(";", "").split(", ");
                 ArrayList<AMedia> savedMedia = new ArrayList<>();
                 for(int i = 0; i < separatedSavedMedia.length; i++){
-                    for(AMedia m: allMedia){
-                        if(m.getName().equals(separatedSavedMedia[i])){
-                            savedMedia.add(m);
+                    for(AMedia s: allMedia){
+                        if(s.getName().equals(separatedSavedMedia[i])){
+                            savedMedia.add(s);
                         }
                     }
                 }
@@ -109,18 +109,25 @@ public class FileHandling {
         File userFile = new File(path);
         try{
             FileWriter writer = new FileWriter(userFile);
-            writer.write("username; password; age; watchedmedia; savedmedia;");
+            writer.write("username; password; age; watchedmedia; savedmedia;\n");
             for(User u: allUsers){
                 String watchedMedia = "";
                 String savedMedia = "";
                 for(AMedia m: u.getWatchedMedia()){
                     watchedMedia += m.getName() + ", ";
                 }
+                if(watchedMedia.length() > 0) {
+                    watchedMedia = watchedMedia.substring(0, (watchedMedia.length() - 2));
+                }
                 for(AMedia s: u.getSavedMedia()){
                     savedMedia += s.getName() + ", ";
                 }
+                if(savedMedia.length() > 0) {
+                    savedMedia = savedMedia.substring(0, (savedMedia.length() - 2));
+                }
                 writer.write(u.getUsername() + "; " + u.getPassword() + "; " + u.getAge() + "; " + watchedMedia + "; " + savedMedia + ";\n");
             }
+            writer.close();
         }catch (IOException ex){
             System.out.println("Failed to save user data.");
         }

@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private ArrayList<AMedia> allMedia = new ArrayList<AMedia>();
-    Random rnd = new Random();
-    Scanner scanner = new Scanner(System.in);
+    private ArrayList<AMedia> allMedia;
+    private Random rnd = new Random();
+    private Scanner scanner = new Scanner(System.in);
     public MainMenu(ArrayList<AMedia> allMedia){
         this.allMedia = allMedia;
     }
@@ -53,19 +53,23 @@ public class MainMenu {
         System.out.println("3 - " + suggestion3.getName() + ".");
         System.out.println("4 - Go back to main menu." );
         String userInput = scanner.nextLine().trim();
-        if(userInput.equals("1")){
-            suggestion1.chooseMedia();
-        } else if(userInput.equals("2")){
-            suggestion2.chooseMedia();
-        } else if(userInput.equals("3")){
-            suggestion3.chooseMedia();
-        } else if(userInput.equals("4")){
-            runMainMenu();
-        } else {
-            System.out.println("The option you have entered does not exist.\nPlease try again.");
-            suggestedMedia();
+        switch(userInput){
+            case "1":
+                suggestion1.chooseMedia();
+                break;
+            case "2":
+                suggestion2.chooseMedia();
+                break;
+            case "3":
+                suggestion3.chooseMedia();
+                break;
+            case "4":
+                runMainMenu();
+                break;
+            default:
+                System.out.println("The option you have entered does not exist.\nPlease try again.");
+                suggestedMedia();
         }
-
     }
 
     private AMedia getRandomMediaFromCategory(String category){
@@ -81,8 +85,7 @@ public class MainMenu {
 
     private String getRandomCategory(String[] lastPlayedCategories){
         int randomCategory = rnd.nextInt(0,lastPlayedCategories.length);
-        String chosenCategory = lastPlayedCategories[randomCategory];
-        return chosenCategory;
+        return lastPlayedCategories[randomCategory];
     }
 
 }
