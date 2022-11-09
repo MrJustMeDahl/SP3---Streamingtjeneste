@@ -139,11 +139,13 @@ public class MainMenu {
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
-            // lav ny liste kun med film
+                // LAV NY LISTE KUN MED FILM
+                // allMovies
                 searchMovies();
             }
             if (userInput.equals("2")) {
-                //lav ny liste kun med serier
+                //LAV NY LISTER KUN MED SERIE
+                // allSeries
                 searchSeries();
             }
             if (userInput.equals("3")) {
@@ -165,16 +167,16 @@ public class MainMenu {
             String userInput = scanner.nextLine();
 
                 if (userInput.equals("1")) {
-                    searchByMediaName();
+                    searchByMediaName(allMovies);
                 }
                 if (userInput.equals("2")) {
-                    searchByCategory();
+                    searchByCategory(allMovies);
                     }
                 if (userInput.equals("3")) {
-                   searchByRating();
+                   searchByRating(allMovies);
                 }
                 if (userInput.equals("4")) {
-                    searchByYearOfRelease();
+                    searchByYearOfRelease(allMovies);
                 }
                 if (userInput.equals("5")) {
                     searchEngine();
@@ -195,20 +197,20 @@ public class MainMenu {
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
-               searchByMediaName();
+               searchByMediaName(allSeries);
             }
             if (userInput.equals("2")) {
-               searchByCategory();
+               searchByCategory(allSeries);
 
             }
             if (userInput.equals("3")) {
-                searchByRating();
+                searchByRating(allSeries);
             }
             if (userInput.equals("4")) {
-                searchByYearOfRelease();
+                searchByYearOfRelease(allSeries);
             }
             if (userInput.equals("5")) {
-               searchByFinalSeason();
+               searchByFinalSeason(allSeries);
             }
             if (userInput.equals("6")) {
                 searchEngine();
@@ -219,7 +221,7 @@ public class MainMenu {
 
     }
 
-    private void searchByMediaName(){
+    private void searchByMediaName(ArrayList<AMedia> Media){
         System.out.println(//LISTE OVER TILGÆNGELIGE MEDIER: );
         System.out.println("Please enter the name of the movie you wish to see: ");
 
@@ -348,20 +350,63 @@ public class MainMenu {
 
     }
 
-    private void searchByRating(){
+    private void searchByRating(ArrayList<AMedia> Media) {
         System.out.println("Please enter then minimum rating of movies you wish to see.");
-        float minimumRating = scanner.nextFloat();
+        String userInput = scanner.nextLine();
+        double minimumRating = -1.0;
+        try {
+            if (userInput.length() == 1) {
+                userInput += ".0";
+            }
 
+            minimumRating = Double.parseDouble(userInput.replace(",", "."));
+            if (minimumRating <= 0 || minimumRating > 10) {
+                System.out.println("The typed Rating doesn't exist, please try again: ");
+                searchByRating(Media);
+            }
+
+        } catch (Exception e) {
+            System.out.println("The typed Rating doesn't exist, please try again: ");
+            searchByRating(Media);
+        }
+        ArrayList<AMedia> mediaByRating = new ArrayList<>();
+        for (AMedia m : Media) {
+
+            if (m.getRating() >= minimumRating) {
+                mediaByRating.add(m);
+
+            }
+
+        }
+        System.out.println("Choose the movie you wish to see: ");
+        for (int i = 0; i < mediaByRating.size(); i++) {
+            System.out.println(i + 1 + " - " + mediaByRating.get(i).getName());
+        }
+        String selectedInput = scanner.nextLine();
+        int userInput2 = -1;
+        try {
+            userInput2 = Integer.parseInt(selectedInput);
+            if (userInput2 > mediaByRating.size() || userInput2 <= 0) {
+                System.out.println("The chosen movie doesn't exist, please try again.");
+                searchByRating(Media);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("The chosen movie doesn't exist, please try again. ");
+            searchByRating(Media);
+        }
+        allMedia.get(userInput2).chooseMedia();
+
+    }
+
+
+    private void searchByYearOfRelease(ArrayList<AMedia> Media){
 
 
     }
 
-    private void searchByYearOfRelease(){
-
-
-    }
-
-    private void searchByFinalSeason(){
+    private void searchByFinalSeason(ArrayList<AMedia> Media){
 
 
 
