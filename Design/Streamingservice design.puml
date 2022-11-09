@@ -10,17 +10,10 @@ AMedia <|-- Movie
 AMedia <|-- Series
 
 class ProgramControl{
-+ ArrayList<User> allUsers
-+ ArrayList<AMedia> allMedia
+- ArrayList<User> allUsers
+- ArrayList<AMedia> allMedia
 + static User currentUser
-+ static Scanner userInput
 + void runProgram()
-+ void setCurrentUser(User user)
-+ ArrayList<AMedia> getAllMedia()
-- ArrayList<AMedia> readFromMovieFile(String path)
-- ArrayList<AMedia> readFromSeriesFile(String path)
-- ArrayList<User> readFromUserFile(String path)
-- void writeToUserFile(String path)
 }
 
 class StartMenu{
@@ -78,9 +71,11 @@ class User{
 + void addWatchedMedia(AMedia)
 }
 
-interface FileHandling{
-+ readFromFile()
-+ writeToFile()
+class FileHandling{
++ static ArrayList<AMedia> readFromMovieFile(String path)
++ static ArrayList<AMedia> readFromSeriesFile(String path)
++ static ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia)
++ static void writeToUserFile(String path, ArrayList<User> allUsers)
 }
 
 @enduml

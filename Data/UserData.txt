@@ -1,1 +1,2 @@
 username; password; age; watchedmedia; savedmedia;
+TestUser; TestUser123; 20; The Godfather, Citizen Kane; The Godfather part II;
