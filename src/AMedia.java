@@ -44,12 +44,15 @@ public abstract class AMedia {
         switch (userInput) {
             case "1":
                 playMedia(this);
+                ProgramControl.mainMenu.runMainMenu();
                 break;
             case "2":
                 ProgramControl.currentUser.addSavedMedia(this);
+                ProgramControl.mainMenu.runMainMenu();
                 break;
             case "3":
                 ProgramControl.mainMenu.runMainMenu();
+                break;
             default:
                 System.out.println("The button you pressed is not valid, please try again!");
                 chooseMedia();

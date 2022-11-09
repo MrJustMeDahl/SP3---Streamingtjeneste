@@ -15,6 +15,8 @@ this.allUsers = allUsers;
 //StartMenu Choose to login or create new user
 //******
 public User runStartMenu(){
+    System.out.println("Welcome to Everything Media.");
+    System.out.println("What would you like to do?");
   System.out.println("1 - Login");
   System.out.println("2 - Create new user");
   while (true){

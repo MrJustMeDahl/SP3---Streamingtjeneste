@@ -13,7 +13,7 @@ public class Series extends AMedia{
         this.season = season;
         this.episode = episode;
         this.endYear = endYear;
-
+        super.name += season + "-" + episode;
     }
 
 
