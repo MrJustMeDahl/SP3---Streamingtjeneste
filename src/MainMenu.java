@@ -95,10 +95,12 @@ public class MainMenu {
         int randomCategory = rnd.nextInt(0,lastPlayedCategories.length);
         return lastPlayedCategories[randomCategory];
     }
-    public void logOut(){
+    public void logOut() throws InterruptedException {
 
         FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
-        System.out.println("We are looking forward to see you again!");
-
+            System.out.println("We are looking forward to see you again!");
+        wait(1500);
+        ProgramControl pc = new ProgramControl();
+        pc.runProgram();
     }
 }
