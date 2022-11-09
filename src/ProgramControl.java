@@ -5,6 +5,7 @@ public class ProgramControl {
     private ArrayList<User> allUsers = new ArrayList<>();
     private ArrayList<AMedia> allMedia = new ArrayList<>();
     public static User currentUser;
+    public static MainMenu mainMenu;
 
     public ProgramControl(){
     }
@@ -26,7 +27,7 @@ public class ProgramControl {
             allUsers.add(currentUser);
         }
 
-        MainMenu mainMenu = new MainMenu(allMedia, allUsers);
+        mainMenu = new MainMenu(allMedia, allUsers);
         mainMenu.runMainMenu();
 
         FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
