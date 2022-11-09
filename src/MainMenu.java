@@ -4,11 +4,14 @@ import java.util.Scanner;
 
 public class MainMenu {
 
+    private ArrayList<User> allUsers;
     private ArrayList<AMedia> allMedia;
     private Random rnd = new Random();
     private Scanner scanner = new Scanner(System.in);
-    public MainMenu(ArrayList<AMedia> allMedia){
+    public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers){
         this.allMedia = allMedia;
+        this.allUsers = allUsers;
+
     }
 
     public void runMainMenu(){
@@ -92,5 +95,10 @@ public class MainMenu {
         int randomCategory = rnd.nextInt(0,lastPlayedCategories.length);
         return lastPlayedCategories[randomCategory];
     }
+    public void logOut(){
 
+        FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
+        System.out.println("We are looking forward to see you again!");
+
+    }
 }
