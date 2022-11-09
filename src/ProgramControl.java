@@ -27,7 +27,7 @@ public class ProgramControl {
             allUsers.add(currentUser);
         }
 
-        mainMenu = new MainMenu(allMedia, allUsers);
+        mainMenu = new MainMenu(allMedia, allUsers, movieList, seriesList);
         mainMenu.runMainMenu();
 
         FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
