@@ -1,5 +1,8 @@
+import java.util.Scanner;
+
 public class Movie extends AMedia {
 
+    Scanner sc = new Scanner(System.in);
     Movie(String name, String category, float rating, int releaseYear) {
         super(name, category, rating, releaseYear);
     }
@@ -13,4 +16,7 @@ public class Movie extends AMedia {
         System.out.println("You are now watching : " + name);
 
     }
-}
+
+    }
+
+
