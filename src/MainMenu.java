@@ -4,11 +4,32 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private ArrayList<AMedia> allMedia = new ArrayList<AMedia>();
+    private ArrayList<AMedia> allMedia = new ArrayList<>();
+    private ArrayList<String> allcategories = new ArrayList<>();
+
     Scanner scanner = new Scanner(System.in);
 
     public MainMenu(ArrayList<AMedia> allMedia) {
         this.allMedia = allMedia;
+        allcategories.add("Action");
+        allcategories.add("Adventure");
+        allcategories.add("Biography");
+        allcategories.add("Comedy");
+        allcategories.add("Crime");
+        allcategories.add("Drama");
+        allcategories.add("Family");
+        allcategories.add("Fantasy");
+        allcategories.add("Film-Noir");
+        allcategories.add("History");
+        allcategories.add("Horror");
+        allcategories.add("Musical");
+        allcategories.add("Mystery");
+        allcategories.add("Romance");
+        allcategories.add("Sci-fi");
+        allcategories.add("Sport");
+        allcategories.add("Thriller");
+        allcategories.add("War");
+        allcategories.add("Western");
     }
 /*
     public void runMainMenu() {
@@ -64,10 +85,12 @@ public class MainMenu {
         System.out.println("Press '3' to return to Main");
         while (true) {
             String userInput = scanner.nextLine();
-            if (userInput.equals("1")) {
+            if (userInput.equals("1")) {'
+            // lav ny liste kun med film
                 searchMovies();
             }
             if (userInput.equals("2")) {
+                //lav ny liste kun med serier
                 searchSeries();
             }
             if (userInput.equals("3")) {
@@ -89,32 +112,16 @@ public class MainMenu {
             String userInput = scanner.nextLine();
 
                 if (userInput.equals("1")) {
-                    searchMovieName();
+                    searchByMediaName();
                 }
                 if (userInput.equals("2")) {
-                    System.out.println("Available Categories: \n " + AMedia.getCategory().split(","));
-                    System.out.println("Enter the Category you wish to search: ");
-                    String movieCategory = scanner.nextLine();
-                    if (movieCategory == allMedia) {
-                        return movieCategory;
+                    searchByCategory();
                     }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
-                }
                 if (userInput.equals("3")) {
-                    System.out.println("Enter the minimum rating you wish to see: ");
-                    String movieRating = scanner.nextLine();
-                    if (movieRating <= allMedia) {
-                        return movieRating;
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+                   searchByRating();
                 }
                 if (userInput.equals("4")) {
-                    System.out.println("Enter the release Year: ");
-                    String movieReleaseYear = scanner.nextLine();
-                    if (movieReleaseYear <= allMedia) {
-                        return movieReleaseYear;
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+                    searchByYearOfRelease();
                 }
                 if (userInput.equals("5")) {
                     searchEngine();
@@ -124,7 +131,7 @@ public class MainMenu {
 
     }
 
-    private void searchSeries() {
+    private AMedia searchSeries() {
         System.out.println("Series: ");
         System.out.println("Press '1' for Name: ");
         System.out.println("Press '2' for Category: ");
@@ -135,60 +142,20 @@ public class MainMenu {
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
-               searchSerieName();
+               searchByMediaName();
             }
             if (userInput.equals("2")) {
-                System.out.println("Available Categories: \n " + AMedia.getCategory().split(","));
-                System.out.println("Enter the Category you wish to search: ");
-                String serieCategory = scanner.nextLine();
-                if (serieCategory == AMedia.getCategory()) {
-                    System.out.println("write the media you wish to watch: \n "+ Series.getCategory(serieCategory));
-                    String chosenMedia = scanner.nextLine();
-                    if (chosenMedia = Series.getName()){
-                        searchSerieName();
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
-                }
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+               searchByCategory();
+
             }
             if (userInput.equals("3")) {
-                System.out.println("Enter the minimum rating you wish to see: ");
-                String serieRating = scanner.nextLine();
-                if (serieRating <= AMedia.getRating().split(",")) {
-                    System.out.println("write the media you wish to watch: \n "+ Series.getRating(serieRating));
-                    String chosenMedia = scanner.nextLine();
-                    if (chosenMedia = Series.getRating()){
-                        searchSerieName();
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
-                }
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+                searchByRating();
             }
             if (userInput.equals("4")) {
-                System.out.println("Enter the release Year: ");
-                String serieReleaseYear = scanner.nextLine();
-                if (serieReleaseYear <= AMedia.getReleaseYear()) {
-                    System.out.println("write the media you wish to watch: \n "+ Series.getReleaseYear(serieReleaseYear));
-                    String chosenMedia = scanner.nextLine();
-                    if (chosenMedia = Series.getReleaseYear()){
-                        searchSerieName();
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
-                }
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+                searchByYearOfRelease();
             }
             if (userInput.equals("5")) {
-                System.out.println("Enter the Year of the final season: ");
-                String serieFinalSeason = scanner.nextLine();
-                if (serieFinalSeason <= Series.getEndYear()) {
-                    System.out.println("write the media you wish to watch: \n "+ Series.getEndYear(serieFinalSeason));
-                    String chosenMedia = scanner.nextLine();
-                    if (chosenMedia = Series.getEndYear()){
-                        searchSerieName();
-                    }
-                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
-                }
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+               searchByFinalSeason();
             }
             if (userInput.equals("6")) {
                 searchEngine();
@@ -199,31 +166,131 @@ public class MainMenu {
 
     }
 
-    private void searchMovieName(){
-        System.out.println(" Movies:\n " + AMedia.getName());
+    private void searchByMediaName(){
+        System.out.println(" Movies:\n " + allMedia);
         System.out.println("Please enter the name of the movie you wish to see: ");
-        String chosenMovie = scanner.nextLIne();
-        if (chosenMovie == AMedia.Name()){
-            Movie.playMedia();
+        String chosenMovie = scanner.nextLine();
+        if (chosenMovie == allMedia.Name()){
+            chosenMovie.chooseMedia();
         }
         System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
     }
 
-    private void searchSerieName() {
-        System.out.println("Seasons:\n " + allMedia);
-        System.out.println("Please enter from which season you wish to watch: ");
-        String searchSerieSeason = scanner.nextLine();
-        if (searchSerieSeason == Series.getSeason()) {
-            System.out.println("Which Episode do you wish to watch: ");
-            System.out.println("Episodes:\n " + Series.getEpisode());
-            String searchSerieSeasonEpisode = scanner.nextLine();
-            if (searchSerieSeasonEpisode == Series.getEpisode()) {
-                Series.playMedia();
-            }
-            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+    private void searchByCategory(){
+        System.out.println("Choose a Category you wish to watch: ");
+        for(int i = 0; i<allcategories.size(); i++ ){
+            System.out.println(i+1+" - "+allcategories.get(i));
         }
-        System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+        String chooseCategory = scanner.nextLine();
+        switch(chooseCategory){
+            case "1":
+                searchByChosenCategory(allcategories.get(0));
+                break;
+
+            case "2":
+                searchByChosenCategory(allcategories.get(1));
+                break;
+
+            case "3":
+                searchByChosenCategory(allcategories.get(2));
+                break;
+
+            case "4":
+                searchByChosenCategory(allcategories.get(3));
+                break;
+
+            case "5":
+                searchByChosenCategory(allcategories.get(4));
+                break;
+
+            case "6":
+                searchByChosenCategory(allcategories.get(5));
+                break;
+
+            case "7":
+                searchByChosenCategory(allcategories.get(6));
+                break;
+
+            case "8":
+                searchByChosenCategory(allcategories.get(7));
+                break;
+
+            case "9":
+                searchByChosenCategory(allcategories.get(8));
+                break;
+
+            case "10":
+                searchByChosenCategory(allcategories.get(9));
+                break;
+
+            case "11":
+                searchByChosenCategory(allcategories.get(10));
+                break;
+
+            case "12":
+                searchByChosenCategory(allcategories.get(11));
+                break;
+
+            case "13":
+                searchByChosenCategory(allcategories.get(12));
+                break;
+
+            case "14":
+                searchByChosenCategory(allcategories.get(13));
+                break;
+
+            case "15":
+                searchByChosenCategory(allcategories.get(14));
+                break;
+
+            case "16":
+                searchByChosenCategory(allcategories.get(15));
+                break;
+
+            case "17":
+                searchByChosenCategory(allcategories.get(16));
+                break;
+
+            case "18":
+                searchByChosenCategory(allcategories.get(17));
+                break;
+
+            case "19":
+                searchByChosenCategory(allcategories.get(18));
+                break;
+
+            default:
+                System.out.println("Can't register your answer please try again: ");
+                searchByCategory();
+        }
+
     }
 
+    private void searchByChosenCategory(String chooseCategory){
+
+
+
+
+    }
+
+    private void searchByRating(){
+        System.out.println("Please enter then minimum rating of movies you wish to see.");
+        float r = scanner.nextFloat();
+     if (float r <= allMedia){
+
+        }
+
+    }
+
+    private void searchByYearOfRelease(){
+
+
+    }
+
+    private void searchByFinalSeason(){
+
+
+
+    }
 
 }
