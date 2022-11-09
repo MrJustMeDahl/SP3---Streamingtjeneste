@@ -4,17 +4,14 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    private ArrayList<AMedia> allMedia = new ArrayList<>();
-    private ArrayList<String> allcategories = new ArrayList<>();
-
-    Scanner scanner = new Scanner(System.in);
-
-    public MainMenu(ArrayList<AMedia> allMedia) {
-    private ArrayList<User> allUsers;
     private ArrayList<AMedia> allMedia;
+    private ArrayList<String> allcategories = new ArrayList<>();
+    private ArrayList<User> allUsers;
     private Random rnd = new Random();
     private Scanner scanner = new Scanner(System.in);
-    public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers){
+    public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers) {
+
+
         this.allMedia = allMedia;
         this.allUsers = allUsers;
 
@@ -38,7 +35,7 @@ public class MainMenu {
         allcategories.add("War");
         allcategories.add("Western");
     }
-
+/*
     public void runMainMenu(){
 
         System.out.println("Welcome " + ProgramControl.currentUser.getUsername() + ", please enter an option below.");
@@ -130,6 +127,8 @@ public class MainMenu {
             }catch (InterruptedException e){
 
             }
+        ProgramControl pc = new ProgramControl();
+        pc.runProgram();
     }
 */
     private void searchEngine() {
@@ -139,7 +138,7 @@ public class MainMenu {
         System.out.println("Press '3' to return to Main");
         while (true) {
             String userInput = scanner.nextLine();
-            if (userInput.equals("1")) {'
+            if (userInput.equals("1")) {
             // lav ny liste kun med film
                 searchMovies();
             }
@@ -221,12 +220,9 @@ public class MainMenu {
     }
 
     private void searchByMediaName(){
-        System.out.println(" Movies:\n " + allMedia);
+        System.out.println(//LISTE OVER TILGÆNGELIGE MEDIER: );
         System.out.println("Please enter the name of the movie you wish to see: ");
-        String chosenMovie = scanner.nextLine();
-        if (chosenMovie == allMedia.Name()){
-            chosenMovie.chooseMedia();
-        }
+
         System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
     }
 
@@ -320,19 +316,43 @@ public class MainMenu {
 
     }
 
-    private void searchByChosenCategory(String chooseCategory){
+    private void searchByChosenCategory(String chosenCategory){
+        ArrayList<AMedia> MediaFromCategory = new ArrayList<>();
 
+        for( AMedia m: allMedia){
+            if (m.getCategory().contains(chosenCategory)){
+                MediaFromCategory.add(m);
+            }
 
+        }
+        System.out.println("Please choose a movie from the list");
+        for( int i=0; i<MediaFromCategory.size();i++){
+            System.out.println(i+1+" - "+MediaFromCategory.get(i).getName());
+        }
+            String selectedInput = scanner.nextLine();
+        int userInput = -1;
+        try {
+            userInput = Integer.parseInt(selectedInput);
+            if (userInput > MediaFromCategory.size() || userInput <= 0){
+                System.out.println("The chosen movie doesn't exist, please try again.");
+                searchByChosenCategory(chosenCategory);
+
+            }
+
+        } catch(Exception e){
+            System.out.println("The chosen movie doesn't exist, please try again. ");
+            searchByChosenCategory(chosenCategory);
+        }
+        allMedia.get(userInput).chooseMedia();
 
 
     }
 
     private void searchByRating(){
         System.out.println("Please enter then minimum rating of movies you wish to see.");
-        float r = scanner.nextFloat();
-     if (float r <= allMedia){
+        float minimumRating = scanner.nextFloat();
 
-        }
+
 
     }
 
@@ -347,8 +367,5 @@ public class MainMenu {
 
     }
 
-        ProgramControl pc = new ProgramControl();
-        pc.runProgram();
 
-    }
 }
