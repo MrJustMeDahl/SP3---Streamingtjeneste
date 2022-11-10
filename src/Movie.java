@@ -14,7 +14,9 @@ public class Movie extends AMedia {
         if (ProgramControl.currentUser.getSavedMedia().contains(media)){
             ProgramControl.currentUser.removeSavedMedia(media);
         }
-        ProgramControl.currentUser.addWatchedMedia(media);
+        if(!ProgramControl.currentUser.getWatchedMedia().contains(media)){
+            ProgramControl.currentUser.addWatchedMedia(media);
+        }
         System.out.println("You are now watching : " + name);
         try {
             sleep(2500);
