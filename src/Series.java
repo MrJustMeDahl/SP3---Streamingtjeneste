@@ -2,6 +2,8 @@ import org.w3c.dom.ls.LSOutput;
 
 import javax.naming.Name;
 
+import static java.lang.Thread.sleep;
+
 public class Series extends AMedia{
 
     private int episode;
@@ -36,5 +38,18 @@ public class Series extends AMedia{
         }
         ProgramControl.currentUser.addWatchedMedia(media);
         System.out.println("You are now watching : " + name + "Episode : " + episode);
+        try {
+            sleep(2500);
+        } catch(Exception e){
+        }
+        System.out.println(name + " is now done. Hopefully you enjoyed it.");
+        System.out.println("Returning to main menu.");
+        try{
+            sleep(2500);
+        }catch (Exception e){
+        }
+        for(int i = 0; i < 25; i++){
+            System.out.println("\n");
+        }
     }
 }
