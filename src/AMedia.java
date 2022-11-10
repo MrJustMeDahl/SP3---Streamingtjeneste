@@ -34,11 +34,11 @@ public abstract class AMedia {
     }
     abstract protected void playMedia(AMedia media);
     public void chooseMedia() {
-
-        System.out.println("Choose an option below  : ");
-        System.out.println("Press 1 if you want to play this : ");
-        System.out.println("press 2 if you want to save this : ");
-        System.out.println("Press 3 to run main menu.");
+        System.out.println("You have chosen: " + name + "\n");
+        System.out.println("Choose an option below: ");
+        System.out.println("1 - if you want to play this: ");
+        System.out.println("2 - if you want to save this: \n");
+        System.out.println("3 - Back to main menu.");
         String userInput = sc.nextLine().trim();
 
         switch (userInput) {
