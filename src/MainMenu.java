@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -55,7 +54,7 @@ public class MainMenu {
                     suggestedMedia();
                     break;
                 case "2":
-                    //searchEngine();
+                    searchEngine();
                     break;
                 case "3":
                     logOut();
@@ -184,7 +183,7 @@ public class MainMenu {
         System.out.println("Press '1' for Name: ");
         System.out.println("Press '2' for Category: ");
         System.out.println("Press '3' for Rating: ");
-        System.out.println("Press '4' for Year of release: ");
+        System.out.println("Press '4' by Year: ");
         System.out.println("Press '5' to return to Search: ");
         while (true) {
             String userInput = scanner.nextLine();
@@ -199,7 +198,7 @@ public class MainMenu {
                 searchByRating(allMovies);
             }
             if (userInput.equals("4")) {
-                searchByYearOfRelease(allMovies);
+                searchByYear(allMovies);
             }
             if (userInput.equals("5")) {
                 searchEngine();
@@ -277,7 +276,7 @@ public class MainMenu {
                         searchByRating(allSeries);
                     }
                     if (userInput.equals("4")) {
-                        searchByYearOfRelease(allSeries);
+                        searchByYear(allSeries);
                     }
 
                     if (userInput.equals("5")) {
@@ -480,26 +479,26 @@ public class MainMenu {
 //*********
 //Search by Year of release
 //*********
-            private void searchByYearOfRelease (ArrayList < AMedia > Media) {
-                System.out.println("Please enter the wanted year.");
+            private void searchByYear(ArrayList<AMedia> Media) {
+                System.out.println("Please enter the year you want to search by: ");
                 String userInput = scanner.nextLine();
                 int yearOfRelease = -1;
                 try {
 
                     yearOfRelease = Integer.parseInt(userInput);
-                    if (yearOfRelease <= 1) {
-                        System.out.println("The typed Year doesn't exist, please try again: ");
-                        searchByYearOfRelease(Media);
+                    if (yearOfRelease <= -1) {
+                        System.out.println(userInput + " is not a valid year.");
+                        searchByYear(Media);
                     }
 
                 } catch (Exception e) {
                     System.out.println("The typed Year doesn't exist, please try again: ");
-                    searchByYearOfRelease(Media);
+                    searchByYear(Media);
                 }
                 ArrayList<AMedia> mediaByYearOfRelease = new ArrayList<>();
                 for (AMedia y : Media) {
 
-                    if (y.getReleaseYear() >= yearOfRelease) {
+                    if (y.getReleaseYear() == yearOfRelease || y.getReleaseYear() == yearOfRelease-1 || y.getReleaseYear() == yearOfRelease+1) {
                         mediaByYearOfRelease.add(y);
 
                     }
@@ -515,16 +514,12 @@ public class MainMenu {
                     userInput2 = Integer.parseInt(selectedInput);
                     if (userInput2 > mediaByYearOfRelease.size() || userInput2 <= 0) {
                         System.out.println("The chosen movie doesn't exist, please try again.");
-                        searchByYearOfRelease(Media);
-
+                        searchByYear(Media);
                     }
-
                 } catch (Exception e) {
                     System.out.println("The chosen movie doesn't exist, please try again. ");
-                    searchByYearOfRelease(Media);
+                    searchByYear(Media);
                 }
                 allMedia.get(userInput2).chooseMedia();
-
             }
-
 }
