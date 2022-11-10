@@ -150,7 +150,7 @@ public class MainMenu {
         ProgramControl pc = new ProgramControl();
         pc.runProgram();
     }
-    }
+
 
 //*********
 //Search Engine Start
@@ -189,69 +189,70 @@ public class MainMenu {
         while (true) {
             String userInput = scanner.nextLine();
 
-                if (userInput.equals("1")) {
-                    searchByMediaName(allMovies);
-                }
-                if (userInput.equals("2")) {
-                    searchByCategory(allMovies);
-                    }
-                if (userInput.equals("3")) {
-                   searchByRating(allMovies);
-                }
-                if (userInput.equals("4")) {
-                    searchByYearOfRelease(allMovies);
-                }
-                if (userInput.equals("5")) {
-                    searchEngine();
-                }
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+            if (userInput.equals("1")) {
+                searchByMediaName(allMovies);
             }
+            if (userInput.equals("2")) {
+                searchByCategory(allMovies);
+            }
+            if (userInput.equals("3")) {
+                searchByRating(allMovies);
+            }
+            if (userInput.equals("4")) {
+                searchByYearOfRelease(allMovies);
+            }
+            if (userInput.equals("5")) {
+                searchEngine();
+            }
+            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+        }
+    }
 
     public void userOptions() {
-            System.out.println("You have these options to alter your user settings:");
-            System.out.println("1 - Change username.");
-            System.out.println("2 - Change password.");
-            System.out.println("3 - Delete account.");
-            System.out.println("4 - Return to main menu.");
-            String userInput = scanner.nextLine();
-            switch (userInput) {
-                case "1":
-                    System.out.println("Please enter your new username or press B go back: ");
-                    String username = scanner.nextLine();
-                    if (username.equalsIgnoreCase("b")) {
-                        userOptions();
-                    }
-                    ProgramControl.currentUser.setUsername(username);
-                    break;
-                case "2":
-                    System.out.println("Please enter your new username or press B go back: ");
-                    String password = scanner.nextLine();
-                    if (password.equalsIgnoreCase("b")) {
-                        userOptions();
-                    }
-                    ProgramControl.currentUser.setPassword(password);
-                    break;
-                case "3":
-                    System.out.println("Are you sure that you want to delete your account?");
-                    System.out.println("Press y to delete your account - this can not be undone.");
-                    System.out.println("Press any other key to go back.");
-                    String userChoice = scanner.nextLine();
-                    if (userChoice.equalsIgnoreCase("y")) {
-                        System.out.println("Thank you for trying EverythingMedia.");
-                        allUsers.remove(ProgramControl.currentUser);
-                        logOut();
-                    } else {
-                        userOptions();
-                    }
-                    break;
-                case "4":
-                    runMainMenu();
-                    break;
-                default:
-                    System.out.println("The option you have chosen does not exist. Please try again.");
+        System.out.println("You have these options to alter your user settings:");
+        System.out.println("1 - Change username.");
+        System.out.println("2 - Change password.");
+        System.out.println("3 - Delete account.");
+        System.out.println("4 - Return to main menu.");
+        String userInput = scanner.nextLine();
+        switch (userInput) {
+            case "1":
+                System.out.println("Please enter your new username or press B go back: ");
+                String username = scanner.nextLine();
+                if (username.equalsIgnoreCase("b")) {
                     userOptions();
-            }
-
+                }
+                ProgramControl.currentUser.setUsername(username);
+                break;
+            case "2":
+                System.out.println("Please enter your new username or press B go back: ");
+                String password = scanner.nextLine();
+                if (password.equalsIgnoreCase("b")) {
+                    userOptions();
+                }
+                ProgramControl.currentUser.setPassword(password);
+                break;
+            case "3":
+                System.out.println("Are you sure that you want to delete your account?");
+                System.out.println("Press y to delete your account - this can not be undone.");
+                System.out.println("Press any other key to go back.");
+                String userChoice = scanner.nextLine();
+                if (userChoice.equalsIgnoreCase("y")) {
+                    System.out.println("Thank you for trying EverythingMedia.");
+                    allUsers.remove(ProgramControl.currentUser);
+                    logOut();
+                } else {
+                    userOptions();
+                }
+                break;
+            case "4":
+                runMainMenu();
+                break;
+            default:
+                System.out.println("The option you have chosen does not exist. Please try again.");
+                userOptions();
+        }
+    }
 
 //*********
 //Overview over Series search options
