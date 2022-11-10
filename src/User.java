@@ -46,7 +46,11 @@ public class User {
     }
 
     public void addSavedMedia(AMedia media){
-        savedMedia.add(media);
+        if(!savedMedia.contains(media)){
+            savedMedia.add(media);
+        } else {
+            System.out.println("The media you have chosen is already saved on your list.");
+        }
     }
 
     public void removeSavedMedia(AMedia media){
