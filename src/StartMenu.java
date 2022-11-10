@@ -16,7 +16,12 @@ this.allUsers = allUsers;
 //******
 public User runStartMenu(){
     System.out.println("Welcome to Everything Media.");
-    System.out.println("What would you like to do? (Type 1 or 2 then hit Enter)");
+    System.out.println("");
+    System.out.println("To choose options throughout the entire program. \n" +
+            "You will need to type ONE of the Numbers. \n" +
+            "Then hit ENTER to choose the desired option!!");
+    System.out.println("");
+    System.out.println("What would you like to do?");
   System.out.println("1 - Login");
   System.out.println("2 - Create new user");
   while (true){
