@@ -10,7 +10,7 @@ public class MainMenu {
     private ArrayList<AMedia> allMedia;
     private ArrayList<AMedia> allMovies;
     private ArrayList<AMedia> allSeries;
-    private ArrayList<String> allcategories = new ArrayList<>();
+    private ArrayList<String> allcategories = FileHandling.readFromCategoryFile("Data/Categories.txt");
     private Random rnd = new Random();
     private Scanner scanner = new Scanner(System.in);
     public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries){
@@ -18,26 +18,6 @@ public class MainMenu {
         this.allUsers = allUsers;
         this.allMovies = allMovies;
         this.allSeries = allSeries;
-
-        allcategories.add("Action");
-        allcategories.add("Adventure");
-        allcategories.add("Biography");
-        allcategories.add("Comedy");
-        allcategories.add("Crime");
-        allcategories.add("Drama");
-        allcategories.add("Family");
-        allcategories.add("Fantasy");
-        allcategories.add("Film-Noir");
-        allcategories.add("History");
-        allcategories.add("Horror");
-        allcategories.add("Musical");
-        allcategories.add("Mystery");
-        allcategories.add("Romance");
-        allcategories.add("Sci-fi");
-        allcategories.add("Sport");
-        allcategories.add("Thriller");
-        allcategories.add("War");
-        allcategories.add("Western");
     }
 
     public void runMainMenu(){
@@ -306,88 +286,16 @@ public class MainMenu {
                     System.out.println(i + 1 + " - " + allcategories.get(i));
                 }
                 String chooseCategory = scanner.nextLine();
-                switch (chooseCategory) {
-                    case "1":
-                        searchByChosenCategory(allcategories.get(0), listOfMedia);
-                        break;
-
-                    case "2":
-                        searchByChosenCategory(allcategories.get(1), listOfMedia);
-                        break;
-
-                    case "3":
-                        searchByChosenCategory(allcategories.get(2), listOfMedia);
-                        break;
-
-                    case "4":
-                        searchByChosenCategory(allcategories.get(3), listOfMedia);
-                        break;
-
-                    case "5":
-                        searchByChosenCategory(allcategories.get(4), listOfMedia);
-                        break;
-
-                    case "6":
-                        searchByChosenCategory(allcategories.get(5), listOfMedia);
-                        break;
-
-                    case "7":
-                        searchByChosenCategory(allcategories.get(6), listOfMedia);
-                        break;
-
-                    case "8":
-                        searchByChosenCategory(allcategories.get(7), listOfMedia);
-                        break;
-
-                    case "9":
-                        searchByChosenCategory(allcategories.get(8), listOfMedia);
-                        break;
-
-                    case "10":
-                        searchByChosenCategory(allcategories.get(9), listOfMedia);
-                        break;
-
-                    case "11":
-                        searchByChosenCategory(allcategories.get(10), listOfMedia);
-                        break;
-
-                    case "12":
-                        searchByChosenCategory(allcategories.get(11), listOfMedia);
-                        break;
-
-                    case "13":
-                        searchByChosenCategory(allcategories.get(12), listOfMedia);
-                        break;
-
-                    case "14":
-                        searchByChosenCategory(allcategories.get(13), listOfMedia);
-                        break;
-
-                    case "15":
-                        searchByChosenCategory(allcategories.get(14), listOfMedia);
-                        break;
-
-                    case "16":
-                        searchByChosenCategory(allcategories.get(15), listOfMedia);
-                        break;
-
-                    case "17":
-                        searchByChosenCategory(allcategories.get(16), listOfMedia);
-                        break;
-
-                    case "18":
-                        searchByChosenCategory(allcategories.get(17), listOfMedia);
-                        break;
-
-                    case "19":
-                        searchByChosenCategory(allcategories.get(18), listOfMedia);
-                        break;
-
-                    default:
-                        System.out.println("Can't register your answer please try again: ");
-                        searchByCategory(listOfMedia);
+                int chosenCategory = -1;
+                try{
+                    chosenCategory = Integer.parseInt(chooseCategory);
+                    if(chosenCategory != -1){
+                        searchByChosenCategory(allcategories.get(chosenCategory-1), listOfMedia);
+                    }
+                }catch(Exception e){
+                    System.out.println("The option you have chosen is not valid. Please try again.");
+                    searchByCategory(listOfMedia);
                 }
-
             }
 
 //*********
@@ -486,7 +394,7 @@ public class MainMenu {
                 try {
 
                     yearOfRelease = Integer.parseInt(userInput);
-                    if (yearOfRelease <= -1) {
+                    if (yearOfRelease == -1) {
                         System.out.println(userInput + " is not a valid year.");
                         searchByYear(Media);
                     }

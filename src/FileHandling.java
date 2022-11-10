@@ -132,4 +132,20 @@ public class FileHandling {
             System.out.println("Failed to save user data.");
         }
     }
+
+    public static ArrayList<String> readFromCategoryFile(String path){
+        ArrayList<String> listOfCategories = new ArrayList<>();
+        File file = new File(path);
+        try{
+            Scanner scanner = new Scanner(file);
+            scanner.nextLine();
+            do{
+                String category = scanner.nextLine();
+                listOfCategories.add(category);
+            } while(scanner.hasNextLine());
+        }catch(FileNotFoundException e){
+            System.out.println("Failed to load category data.");
+        }
+        return listOfCategories;
+    }
 }
