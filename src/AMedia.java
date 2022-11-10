@@ -37,7 +37,11 @@ public abstract class AMedia {
         System.out.println("You have chosen: " + name + "\n");
         System.out.println("Choose an option below: ");
         System.out.println("1 - if you want to play this: ");
-        System.out.println("2 - if you want to save this: \n");
+        if(ProgramControl.currentUser.getSavedMedia().contains(this)){
+            System.out.println("2 - if you want to remove this from your list: \n");
+        } else {
+            System.out.println("2 - if you want to save this: \n");
+        }
         System.out.println("3 - Back to main menu.");
         String userInput = sc.nextLine().trim();
 
@@ -47,7 +51,11 @@ public abstract class AMedia {
                 ProgramControl.mainMenu.runMainMenu();
                 break;
             case "2":
-                ProgramControl.currentUser.addSavedMedia(this);
+                if(ProgramControl.currentUser.getSavedMedia().contains(this)){
+                    ProgramControl.currentUser.removeSavedMedia(this);
+                } else {
+                    ProgramControl.currentUser.addSavedMedia(this);
+                }
                 ProgramControl.mainMenu.runMainMenu();
                 break;
             case "3":
