@@ -59,6 +59,7 @@ public class MainMenu {
 
     private void suggestedMedia() {
         ArrayList<AMedia> allMoviesAltered = allMovies;
+        String chosenCategory = "";
         AMedia suggestion1 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
         AMedia suggestion2 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
         AMedia suggestion3 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
@@ -70,7 +71,7 @@ public class MainMenu {
             String[] lastPlayedCategories = lastPlayedCategory.split(", ");
 
 
-            String chosenCategory = getRandomCategory(lastPlayedCategories);
+            chosenCategory = getRandomCategory(lastPlayedCategories);
             //Creating a list of media that has the same category as the randomly chosen categories, and picking a random media from the list. Do this for all 3 randomly chosen categories.
             suggestion1 = getRandomMediaFromCategory(chosenCategory, allMoviesAltered);
             chosenCategory = getRandomCategory(lastPlayedCategories);
@@ -80,7 +81,12 @@ public class MainMenu {
             allMoviesAltered.remove(suggestion2);
             suggestion3 = getRandomMediaFromCategory(chosenCategory, allMoviesAltered);
         }
-
+        if(ProgramControl.currentUser.getAge() < 18){
+            chosenCategory = "Family";
+            suggestion1 = getRandomMediaFromCategory(chosenCategory, allMoviesAltered);
+            suggestion2 = getRandomMediaFromCategory(chosenCategory, allMoviesAltered);
+            suggestion3 = getRandomMediaFromCategory(chosenCategory, allMoviesAltered);
+        }
         System.out.println("We have found these options you might like: ");
         System.out.println("1 - " + suggestion1.getName() + ".");
         System.out.println("2 - " + suggestion2.getName() + ".");
@@ -152,10 +158,10 @@ public class MainMenu {
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
-                searchMovies();
+                searchMovies(allMovies);
             }
             if (userInput.equals("2")) {
-                searchSeries();
+                searchSeries(allSeries);
             }
             if (userInput.equals("3")) {
                 runMainMenu();
@@ -168,7 +174,16 @@ public class MainMenu {
     //*********
 //Overview over Movie search options
 //*********
-    private AMedia searchMovies() {
+    private AMedia searchMovies(ArrayList<AMedia> allMovies) {
+        if(ProgramControl.currentUser.getAge() < 18){
+            ArrayList<AMedia> listOfFamilyMovies = new ArrayList<>();
+            for(AMedia m: allMovies){
+                if(m.getCategory().contains("Family")){
+                    listOfFamilyMovies.add(m);
+                }
+            }
+            allMovies = listOfFamilyMovies;
+        }
         System.out.println("Movies: ");
         System.out.println("1 - by Name: ");
         System.out.println("2 - by Category: ");
@@ -182,7 +197,7 @@ public class MainMenu {
                 searchByMediaName(allMovies);
             }
             if (userInput.equals("2")) {
-                searchByCategory(allMovies);
+                searchByCategory(allMovies, allcategories);
             }
             if (userInput.equals("3")) {
                 searchByRating(allMovies);
@@ -246,7 +261,16 @@ public class MainMenu {
     //*********
 //Overview over Series search options
 //*********
-    private AMedia searchSeries() {
+    private AMedia searchSeries(ArrayList<AMedia> allSeries) {
+        if(ProgramControl.currentUser.getAge() < 18){
+            ArrayList<AMedia> listOfFamilySeries = new ArrayList<>();
+            for(AMedia m: allSeries){
+                if(m.getCategory().contains("Family")){
+                    listOfFamilySeries.add(m);
+                }
+            }
+            allSeries = listOfFamilySeries;
+        }
         System.out.println("Series: ");
         System.out.println("1 - by Name: ");
         System.out.println("2 - by Category: ");
@@ -259,7 +283,7 @@ public class MainMenu {
                 searchByMediaName(allSeries);
             }
             if (userInput.equals("2")) {
-                searchByCategory(allSeries);
+                searchByCategory(allSeries, allcategories);
 
             }
             if (userInput.equals("3")) {
@@ -316,21 +340,41 @@ public class MainMenu {
     //*********
 //Choose a Category to search from
 //*********
-    private void searchByCategory(ArrayList<AMedia> listOfMedia) {
+    private void searchByCategory(ArrayList<AMedia> listOfMedia, ArrayList<String> allCategories) {
+        ArrayList<AMedia> listOfMediaAltered = new ArrayList<>();
+        ArrayList<String> listOfCategoriesAltered = new ArrayList<>();
+        if(ProgramControl.currentUser.getAge() < 18){
+            listOfCategoriesAltered.add("Family");
+            for(AMedia m: listOfMedia){
+                if(m.getCategory().contains("Family")){
+                    listOfMediaAltered.add(m);
+                    String[] mCategories = m.getCategory().split(", ");
+                    for(int i = 0; i < mCategories.length; i++){
+                        if(!listOfCategoriesAltered.contains(mCategories[i])){
+                            listOfCategoriesAltered.add(mCategories[i]);
+                        }
+                    }
+                }
+            }
+        }
+        if(ProgramControl.currentUser.getAge() >= 18){
+            listOfMediaAltered = listOfMedia;
+            listOfCategoriesAltered = allCategories;
+        }
         System.out.println("Choose your desired Category: ");
-        for (int i = 0; i < allcategories.size(); i++) {
-            System.out.println(i + 1 + " - " + allcategories.get(i));
+        for (int i = 0; i < listOfCategoriesAltered.size(); i++) {
+            System.out.println(i + 1 + " - " + listOfCategoriesAltered.get(i));
         }
         String chooseCategory = scanner.nextLine();
         int chosenCategory = -1;
         try {
             chosenCategory = Integer.parseInt(chooseCategory);
             if (chosenCategory != -1) {
-                searchByChosenCategory(allcategories.get(chosenCategory - 1), listOfMedia);
+                searchByChosenCategory(listOfCategoriesAltered.get(chosenCategory - 1), listOfMediaAltered);
             }
         } catch (Exception e) {
             System.out.println("The option you have chosen is not valid. Please try again.");
-            searchByCategory(listOfMedia);
+            searchByCategory(listOfMedia, allCategories);
         }
     }
 
@@ -483,14 +527,19 @@ public class MainMenu {
             runMainMenu();
         }
         System.out.println("What would you like to watch from your saved list?");
-        for (int i = 0; i < savedMedia.size(); i++) {
+        int i;
+        for (i = 0; i < savedMedia.size(); i++) {
             System.out.println(i + 1 + " - " + savedMedia.get(i).getName());
         }
+        System.out.println("\n" +(i+1) + " - Return to main menu.");
         String userInput = scanner.nextLine();
         int chosenMedia = -1;
         try {
             chosenMedia = Integer.parseInt(userInput);
-            if (chosenMedia <= 0 || chosenMedia < savedMedia.size()) {
+            if(chosenMedia == i+1){
+                runMainMenu();
+            }
+            if (chosenMedia < 0 || chosenMedia > savedMedia.size()) {
                 System.out.println("The chosen option doesn't exist, please try again.");
                 searchBySavedMedia();
             }
@@ -517,20 +566,25 @@ public class MainMenu {
             runMainMenu();
         }
         System.out.println("What would you like to watch again?");
-        for (int i = 0; i < watchedMedia.size(); i++) {
+        int i;
+        for (i = 0; i < watchedMedia.size(); i++) {
             System.out.println(i + 1 + " - " + watchedMedia.get(i).getName());
         }
+        System.out.println("\n" + (i+1) + " - Return to main menu.");
         String userInput = scanner.nextLine();
         int chosenMedia = -1;
         try {
             chosenMedia = Integer.parseInt(userInput);
-            if (chosenMedia <= 0 || chosenMedia < watchedMedia.size()) {
+            if(chosenMedia == i+1){
+                runMainMenu();
+            }
+            if (chosenMedia < 0 || chosenMedia > watchedMedia.size()) {
                 System.out.println("The chosen option doesn't exist, please try again.");
-                searchBySavedMedia();
+                searchByWatchedMedia();
             }
         } catch (Exception e) {
             System.out.println("The chosen option doesn't exist, please try again. ");
-            searchBySavedMedia();
+            searchByWatchedMedia();
         }
         watchedMedia.get(chosenMedia - 1).chooseMedia();
     }
