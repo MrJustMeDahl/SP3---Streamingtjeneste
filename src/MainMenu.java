@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class MainMenu {
 
     private ArrayList<User> allUsers;
@@ -23,18 +25,25 @@ public class MainMenu {
         while(true) {
             System.out.println("1 - Get suggestions.");
             System.out.println("2 - Search.");
-            System.out.println("3 - log out.");
+            System.out.println("3 - Log out.");
+            System.out.println("4 - User options.");
             String userInput = scanner.nextLine();
-            if (userInput.equals("1")) {
-                suggestedMedia();
+            switch(userInput){
+                case "1":
+                    suggestedMedia();
+                    break;
+                case "2":
+                    //searchEngine();
+                    break;
+                case "3":
+                    logOut();
+                    break;
+                case "4":
+                    userOptions();
+                    break;
+                default:
+                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
             }
-            if (userInput.equals("2")) {
-                //searchEngine();
-            }
-            if (userInput.equals("3")) {
-                logOut();
-            }
-            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
         }
     }
 
@@ -104,19 +113,65 @@ public class MainMenu {
         int randomCategory = rnd.nextInt(0,lastPlayedCategories.length);
         return lastPlayedCategories[randomCategory];
     }
+
     public void logOut() {
-
         FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
-            System.out.println("We are looking forward to see you again!");
-          /*  try{
-                wait(1500);
+        System.out.println("We look forward to see you again!");
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
 
-            }catch (InterruptedException e){
-
-            }
-*/
+        }
+        for(int i = 0; i < 25; i++){
+            System.out.println("\n");
+        }
         ProgramControl pc = new ProgramControl();
         pc.runProgram();
+    }
 
+    public void userOptions(){
+        System.out.println("You have these options to alter your user settings:");
+        System.out.println("1 - Change username.");
+        System.out.println("2 - Change password.");
+        System.out.println("3 - Delete account.");
+        System.out.println("4 - Return to main menu.");
+        String userInput = scanner.nextLine();
+        switch(userInput){
+            case "1":
+                System.out.println("Please enter your new username or press B go back: ");
+                String username = scanner.nextLine();
+                if(username.equalsIgnoreCase("b")){
+                    userOptions();
+                }
+                ProgramControl.currentUser.setUsername(username);
+                break;
+            case "2":
+                System.out.println("Please enter your new username or press B go back: ");
+                String password = scanner.nextLine();
+                if(password.equalsIgnoreCase("b")){
+                    userOptions();
+                }
+                ProgramControl.currentUser.setPassword(password);
+                break;
+            case "3":
+                System.out.println("Are you sure that you want to delete your account?");
+                System.out.println("Press y to delete your account - this can not be undone.");
+                System.out.println("Press any other key to go back.");
+                String userChoice = scanner.nextLine();
+                if(userChoice.equalsIgnoreCase("y")){
+                    System.out.println("Thank you for trying EverythingMedia.");
+                    allUsers.remove(ProgramControl.currentUser);
+                    logOut();
+                } else {
+                    userOptions();
+                }
+                break;
+            case "4":
+                runMainMenu();
+                break;
+            default:
+                System.out.println("The option you have chosen does not exist. Please try again.");
+                userOptions();
+        }
     }
 }
