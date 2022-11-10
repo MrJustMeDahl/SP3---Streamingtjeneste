@@ -23,18 +23,25 @@ public class MainMenu {
         while(true) {
             System.out.println("1 - Get suggestions.");
             System.out.println("2 - Search.");
-            System.out.println("3 - log out.");
+            System.out.println("3 - Log out.");
+            System.out.println("4 - User options.");
             String userInput = scanner.nextLine();
-            if (userInput.equals("1")) {
-                suggestedMedia();
+            switch(userInput){
+                case "1":
+                    suggestedMedia();
+                    break;
+                case "2":
+                    //searchEngine();
+                    break;
+                case "3":
+                    logOut();
+                    break;
+                case "4":
+                    userOptions();
+                    break;
+                default:
+                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
             }
-            if (userInput.equals("2")) {
-                //searchEngine();
-            }
-            if (userInput.equals("3")) {
-                logOut();
-            }
-            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
         }
     }
 
