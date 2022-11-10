@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class MainMenu {
     private ArrayList<AMedia> allMedia;
     private ArrayList<AMedia> allMovies;
     private ArrayList<AMedia> allSeries;
+    private ArrayList<String> allcategories = new ArrayList<>();
     private Random rnd = new Random();
     private Scanner scanner = new Scanner(System.in);
     public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries){
@@ -17,6 +19,26 @@ public class MainMenu {
         this.allUsers = allUsers;
         this.allMovies = allMovies;
         this.allSeries = allSeries;
+
+        allcategories.add("Action");
+        allcategories.add("Adventure");
+        allcategories.add("Biography");
+        allcategories.add("Comedy");
+        allcategories.add("Crime");
+        allcategories.add("Drama");
+        allcategories.add("Family");
+        allcategories.add("Fantasy");
+        allcategories.add("Film-Noir");
+        allcategories.add("History");
+        allcategories.add("Horror");
+        allcategories.add("Musical");
+        allcategories.add("Mystery");
+        allcategories.add("Romance");
+        allcategories.add("Sci-fi");
+        allcategories.add("Sport");
+        allcategories.add("Thriller");
+        allcategories.add("War");
+        allcategories.add("Western");
     }
 
     public void runMainMenu(){
@@ -129,18 +151,75 @@ public class MainMenu {
         pc.runProgram();
     }
 
-    public void userOptions(){
+
+//*********
+//Search Engine Start
+//*********
+    private void searchEngine() {
+        System.out.println("Search options: ");
+        System.out.println("Press '1' for Movie: ");
+        System.out.println("Press '2' for Series: ");
+        System.out.println("Press '3' to return to Main");
+        while (true) {
+            String userInput = scanner.nextLine();
+            if (userInput.equals("1")) {
+                searchMovies();
+            }
+            if (userInput.equals("2")) {
+                searchSeries();
+            }
+            if (userInput.equals("3")) {
+                runMainMenu();
+            }
+            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+        }
+
+    }
+
+//*********
+//Overview over Movie search options
+//*********
+    private AMedia searchMovies() {
+        System.out.println("Movies: ");
+        System.out.println("Press '1' for Name: ");
+        System.out.println("Press '2' for Category: ");
+        System.out.println("Press '3' for Rating: ");
+        System.out.println("Press '4' for Year of release: ");
+        System.out.println("Press '5' to return to Search: ");
+        while (true) {
+            String userInput = scanner.nextLine();
+
+            if (userInput.equals("1")) {
+                searchByMediaName(allMovies);
+            }
+            if (userInput.equals("2")) {
+                searchByCategory(allMovies);
+            }
+            if (userInput.equals("3")) {
+                searchByRating(allMovies);
+            }
+            if (userInput.equals("4")) {
+                searchByYearOfRelease(allMovies);
+            }
+            if (userInput.equals("5")) {
+                searchEngine();
+            }
+            System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+        }
+    }
+
+    public void userOptions() {
         System.out.println("You have these options to alter your user settings:");
         System.out.println("1 - Change username.");
         System.out.println("2 - Change password.");
         System.out.println("3 - Delete account.");
         System.out.println("4 - Return to main menu.");
         String userInput = scanner.nextLine();
-        switch(userInput){
+        switch (userInput) {
             case "1":
                 System.out.println("Please enter your new username or press B go back: ");
                 String username = scanner.nextLine();
-                if(username.equalsIgnoreCase("b")){
+                if (username.equalsIgnoreCase("b")) {
                     userOptions();
                 }
                 ProgramControl.currentUser.setUsername(username);
@@ -148,7 +227,7 @@ public class MainMenu {
             case "2":
                 System.out.println("Please enter your new username or press B go back: ");
                 String password = scanner.nextLine();
-                if(password.equalsIgnoreCase("b")){
+                if (password.equalsIgnoreCase("b")) {
                     userOptions();
                 }
                 ProgramControl.currentUser.setPassword(password);
@@ -158,7 +237,7 @@ public class MainMenu {
                 System.out.println("Press y to delete your account - this can not be undone.");
                 System.out.println("Press any other key to go back.");
                 String userChoice = scanner.nextLine();
-                if(userChoice.equalsIgnoreCase("y")){
+                if (userChoice.equalsIgnoreCase("y")) {
                     System.out.println("Thank you for trying EverythingMedia.");
                     allUsers.remove(ProgramControl.currentUser);
                     logOut();
@@ -174,4 +253,278 @@ public class MainMenu {
                 userOptions();
         }
     }
+
+//*********
+//Overview over Series search options
+//*********
+            private AMedia searchSeries () {
+                System.out.println("Series: ");
+                System.out.println("Press '1' for Name: ");
+                System.out.println("Press '2' for Category: ");
+                System.out.println("Press '3' for Rating: ");
+                System.out.println("Press '4' for Year of release: ");
+                System.out.println("Press '5' to return to Search: ");
+                while (true) {
+                    String userInput = scanner.nextLine();
+                    if (userInput.equals("1")) {
+                        searchByMediaName(allSeries);
+                    }
+                    if (userInput.equals("2")) {
+                        searchByCategory(allSeries);
+
+                    }
+                    if (userInput.equals("3")) {
+                        searchByRating(allSeries);
+                    }
+                    if (userInput.equals("4")) {
+                        searchByYearOfRelease(allSeries);
+                    }
+
+                    if (userInput.equals("5")) {
+                        searchEngine();
+                    }
+                    System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+                }
+            }
+
+
+//*********
+//Search by Name
+//*********
+            private void searchByMediaName (ArrayList < AMedia > Media) {
+                //System.out.println("LISTE OVER TILGÆNGELIGE MEDIER: " );
+                System.out.println("Please enter the name of the movie you wish to see: ");
+                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+
+            }
+
+//*********
+//Choose a Category to search from
+//*********
+            private void searchByCategory (ArrayList < AMedia > listOfMedia) {
+                System.out.println("Choose a Category you wish to watch: ");
+                for (int i = 0; i < allcategories.size(); i++) {
+                    System.out.println(i + 1 + " - " + allcategories.get(i));
+                }
+                String chooseCategory = scanner.nextLine();
+                switch (chooseCategory) {
+                    case "1":
+                        searchByChosenCategory(allcategories.get(0), listOfMedia);
+                        break;
+
+                    case "2":
+                        searchByChosenCategory(allcategories.get(1), listOfMedia);
+                        break;
+
+                    case "3":
+                        searchByChosenCategory(allcategories.get(2), listOfMedia);
+                        break;
+
+                    case "4":
+                        searchByChosenCategory(allcategories.get(3), listOfMedia);
+                        break;
+
+                    case "5":
+                        searchByChosenCategory(allcategories.get(4), listOfMedia);
+                        break;
+
+                    case "6":
+                        searchByChosenCategory(allcategories.get(5), listOfMedia);
+                        break;
+
+                    case "7":
+                        searchByChosenCategory(allcategories.get(6), listOfMedia);
+                        break;
+
+                    case "8":
+                        searchByChosenCategory(allcategories.get(7), listOfMedia);
+                        break;
+
+                    case "9":
+                        searchByChosenCategory(allcategories.get(8), listOfMedia);
+                        break;
+
+                    case "10":
+                        searchByChosenCategory(allcategories.get(9), listOfMedia);
+                        break;
+
+                    case "11":
+                        searchByChosenCategory(allcategories.get(10), listOfMedia);
+                        break;
+
+                    case "12":
+                        searchByChosenCategory(allcategories.get(11), listOfMedia);
+                        break;
+
+                    case "13":
+                        searchByChosenCategory(allcategories.get(12), listOfMedia);
+                        break;
+
+                    case "14":
+                        searchByChosenCategory(allcategories.get(13), listOfMedia);
+                        break;
+
+                    case "15":
+                        searchByChosenCategory(allcategories.get(14), listOfMedia);
+                        break;
+
+                    case "16":
+                        searchByChosenCategory(allcategories.get(15), listOfMedia);
+                        break;
+
+                    case "17":
+                        searchByChosenCategory(allcategories.get(16), listOfMedia);
+                        break;
+
+                    case "18":
+                        searchByChosenCategory(allcategories.get(17), listOfMedia);
+                        break;
+
+                    case "19":
+                        searchByChosenCategory(allcategories.get(18), listOfMedia);
+                        break;
+
+                    default:
+                        System.out.println("Can't register your answer please try again: ");
+                        searchByCategory(listOfMedia);
+                }
+
+            }
+
+//*********
+//Search by ChosenCategory
+//*********
+            private void searchByChosenCategory (String chosenCategory, ArrayList < AMedia > listOfMedia){
+                ArrayList<AMedia> MediaFromCategory = new ArrayList<>();
+
+                for (AMedia m : listOfMedia) {
+                    if (m.getCategory().contains(chosenCategory)) {
+                        MediaFromCategory.add(m);
+                    }
+
+                }
+                System.out.println("Please choose a movie from the list");
+                for (int i = 0; i < MediaFromCategory.size(); i++) {
+                    System.out.println(i + 1 + " - " + MediaFromCategory.get(i).getName());
+                }
+                String selectedInput = scanner.nextLine();
+                int userInput = -1;
+                try {
+                    userInput = Integer.parseInt(selectedInput);
+                    if (userInput > MediaFromCategory.size() || userInput <= 0) {
+                        System.out.println("The chosen movie doesn't exist, please try again.");
+                        searchByChosenCategory(chosenCategory, listOfMedia);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The chosen movie doesn't exist, please try again. ");
+                    searchByChosenCategory(chosenCategory, listOfMedia);
+                }
+                MediaFromCategory.get(userInput - 1).chooseMedia();
+            }
+
+//*********
+//Search by Rating
+//*********
+            private void searchByRating (ArrayList < AMedia > Media) {
+                System.out.println("Please enter the minimum rating of movies you wish to see.");
+                String userInput = scanner.nextLine();
+                double minimumRating = -1.0;
+                try {
+                    if (userInput.length() == 1) {
+                        userInput += ".0";
+                    }
+
+                    minimumRating = Double.parseDouble(userInput.replace(",", "."));
+                    if (minimumRating <= 0 || minimumRating > 10) {
+                        System.out.println("The typed Rating doesn't exist, please try again: ");
+                        searchByRating(Media);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The typed Rating doesn't exist, please try again: ");
+                    searchByRating(Media);
+                }
+                ArrayList<AMedia> mediaByRating = new ArrayList<>();
+                for (AMedia m : Media) {
+
+                    if (m.getRating() >= minimumRating) {
+                        mediaByRating.add(m);
+
+                    }
+
+                }
+                System.out.println("Choose the movie you wish to see: ");
+                for (int i = 0; i < mediaByRating.size(); i++) {
+                    System.out.println(i + 1 + " - " + mediaByRating.get(i).getName());
+                }
+                String selectedInput = scanner.nextLine();
+                int userInput2 = -1;
+                try {
+                    userInput2 = Integer.parseInt(selectedInput);
+                    if (userInput2 > mediaByRating.size() || userInput2 <= 0) {
+                        System.out.println("The chosen movie doesn't exist, please try again.");
+                        searchByRating(Media);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The chosen movie doesn't exist, please try again. ");
+                    searchByRating(Media);
+                }
+                allMedia.get(userInput2).chooseMedia();
+
+            }
+
+//*********
+//Search by Year of release
+//*********
+            private void searchByYearOfRelease (ArrayList < AMedia > Media) {
+                System.out.println("Please enter the wanted year.");
+                String userInput = scanner.nextLine();
+                int yearOfRelease = -1;
+                try {
+
+                    yearOfRelease = Integer.parseInt(userInput);
+                    if (yearOfRelease <= 1) {
+                        System.out.println("The typed Year doesn't exist, please try again: ");
+                        searchByYearOfRelease(Media);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The typed Year doesn't exist, please try again: ");
+                    searchByYearOfRelease(Media);
+                }
+                ArrayList<AMedia> mediaByYearOfRelease = new ArrayList<>();
+                for (AMedia y : Media) {
+
+                    if (y.getReleaseYear() >= yearOfRelease) {
+                        mediaByYearOfRelease.add(y);
+
+                    }
+
+                }
+                System.out.println("Choose the movie you wish to see: ");
+                for (int i = 0; i < mediaByYearOfRelease.size(); i++) {
+                    System.out.println(i + 1 + " - " + mediaByYearOfRelease.get(i).getName());
+                }
+                String selectedInput = scanner.nextLine();
+                int userInput2 = -1;
+                try {
+                    userInput2 = Integer.parseInt(selectedInput);
+                    if (userInput2 > mediaByYearOfRelease.size() || userInput2 <= 0) {
+                        System.out.println("The chosen movie doesn't exist, please try again.");
+                        searchByYearOfRelease(Media);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The chosen movie doesn't exist, please try again. ");
+                    searchByYearOfRelease(Media);
+                }
+                allMedia.get(userInput2).chooseMedia();
+
+            }
+
 }

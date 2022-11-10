@@ -5,6 +5,4 @@ public class Main {
         ProgramControl program = new ProgramControl();
         program.runProgram();
     }
-
-
 }
