@@ -38,7 +38,7 @@ public abstract class AMedia {
         System.out.println("Choose an option below: ");
         System.out.println("1 - if you want to play this: ");
         System.out.println("2 - if you want to save this: \n");
-        System.out.println("3 - to run main menu.");
+        System.out.println("3 - Back to main menu.");
         String userInput = sc.nextLine().trim();
 
         switch (userInput) {

@@ -95,7 +95,7 @@ public class MainMenu {
             System.out.println("We have found these options you might like: ");
             System.out.println("1 - " + suggestion1.getName() + ".");
             System.out.println("2 - " + suggestion2.getName() + ".");
-            System.out.println("3 - " + suggestion3.getName() + ".");
+            System.out.println("3 - " + suggestion3.getName() + ".\n");
             System.out.println("4 - Go back to main menu.");
             String userInput = scanner.nextLine().trim();
             switch (userInput) {
