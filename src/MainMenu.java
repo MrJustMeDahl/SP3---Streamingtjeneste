@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -55,7 +54,7 @@ public class MainMenu {
                     suggestedMedia();
                     break;
                 case "2":
-                    //searchEngine();
+                    searchEngine();
                     break;
                 case "3":
                     logOut();
@@ -291,11 +290,37 @@ public class MainMenu {
 //*********
 //Search by Name
 //*********
-            private void searchByMediaName (ArrayList < AMedia > Media) {
-                //System.out.println("LISTE OVER TILGÆNGELIGE MEDIER: " );
-                System.out.println("Please enter the name of the movie you wish to see: ");
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+            private void searchByMediaName (ArrayList < AMedia > listOfMedia) {
 
+                System.out.println("Please enter the Title you wish to see: ");
+                String userInput = scanner.nextLine();
+                ArrayList<AMedia> mediaByName = new ArrayList<>();
+                for (AMedia m : listOfMedia) {
+                    if (m.getName().toLowerCase().contains(userInput.toLowerCase())) {
+                        mediaByName.add(m);
+                    }
+
+                }
+                System.out.println("You can choose the following: \n");
+
+                for( int i =0; i<mediaByName.size(); i++ ){
+                    System.out.println(i+1+" - " + mediaByName.get(i).getName());
+                }
+                String input2 = scanner.nextLine();
+                int userInput2 = -1;
+                try {
+                    userInput2 = Integer.parseInt(input2);
+                    if (userInput2 > mediaByName.size() || userInput2 <= 0) {
+                        System.out.println("The chosen movie doesn't exist, please try again.");
+                        searchByMediaName(listOfMedia);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The chosen movie doesn't exist, please try again. ");
+                    searchByMediaName(listOfMedia);
+                }
+                mediaByName.get(userInput2 -1).chooseMedia();
             }
 
 //*********
@@ -487,7 +512,7 @@ public class MainMenu {
                 try {
 
                     yearOfRelease = Integer.parseInt(userInput);
-                    if (yearOfRelease <= 1) {
+                    if (yearOfRelease == -1) {
                         System.out.println("The typed Year doesn't exist, please try again: ");
                         searchByYearOfRelease(Media);
                     }
