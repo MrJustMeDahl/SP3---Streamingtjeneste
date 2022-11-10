@@ -54,7 +54,7 @@ public class MainMenu {
                     suggestedMedia();
                     break;
                 case "2":
-                    //searchEngine();
+                    searchEngine();
                     break;
                 case "3":
                     logOut();
@@ -301,7 +301,7 @@ public class MainMenu {
 //Choose a Category to search from
 //*********
             private void searchByCategory (ArrayList < AMedia > listOfMedia) {
-                System.out.println("Choose a Category you wish to watch: ");
+                System.out.println("Choose your desired Category: ");
                 for (int i = 0; i < allcategories.size(); i++) {
                     System.out.println(i + 1 + " - " + allcategories.get(i));
                 }
@@ -402,7 +402,7 @@ public class MainMenu {
                     }
 
                 }
-                System.out.println("Please choose a movie from the list");
+                System.out.println("Please choose a desired movie from the list");
                 for (int i = 0; i < MediaFromCategory.size(); i++) {
                     System.out.println(i + 1 + " - " + MediaFromCategory.get(i).getName());
                 }
@@ -437,7 +437,7 @@ public class MainMenu {
 
                     minimumRating = Double.parseDouble(userInput.replace(",", "."));
                     if (minimumRating <= 0 || minimumRating > 10) {
-                        System.out.println("The typed Rating doesn't exist, please try again: ");
+                        System.out.println("The typed Rating is either too low or too high, please try again: ");
                         searchByRating(Media);
                     }
 
@@ -480,7 +480,7 @@ public class MainMenu {
 //Search by Year of release
 //*********
             private void searchByYearOfRelease (ArrayList < AMedia > Media) {
-                System.out.println("Please enter the wanted year.");
+                System.out.println("Please enter the desired year of release.");
                 String userInput = scanner.nextLine();
                 int yearOfRelease = -1;
                 try {
