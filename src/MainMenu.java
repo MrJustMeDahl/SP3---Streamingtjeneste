@@ -156,9 +156,9 @@ public class MainMenu {
 //*********
     private void searchEngine() {
         System.out.println("Search options: ");
-        System.out.println("Press '1' for Movie: ");
-        System.out.println("Press '2' for Series: ");
-        System.out.println("Press '3' to return to Main");
+        System.out.println("1 - by Movie: ");
+        System.out.println("2 - by Series: ");
+        System.out.println("3 - to return to Main");
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
@@ -180,11 +180,11 @@ public class MainMenu {
 //*********
     private AMedia searchMovies() {
         System.out.println("Movies: ");
-        System.out.println("Press '1' for Name: ");
-        System.out.println("Press '2' for Category: ");
-        System.out.println("Press '3' for Rating: ");
-        System.out.println("Press '4' for Year of release: ");
-        System.out.println("Press '5' to return to Search: ");
+        System.out.println("1 - by Name: ");
+        System.out.println("2 - by Category: ");
+        System.out.println("3 - by Rating: ");
+        System.out.println("4 - by Year of release: ");
+        System.out.println("5 - to return to Search: ");
         while (true) {
             String userInput = scanner.nextLine();
 
@@ -258,11 +258,11 @@ public class MainMenu {
 //*********
             private AMedia searchSeries () {
                 System.out.println("Series: ");
-                System.out.println("Press '1' for Name: ");
-                System.out.println("Press '2' for Category: ");
-                System.out.println("Press '3' for Rating: ");
-                System.out.println("Press '4' for Year of release: ");
-                System.out.println("Press '5' to return to Search: ");
+                System.out.println("1 - by Name: ");
+                System.out.println("2 - by Category: ");
+                System.out.println("3 - by Rating: ");
+                System.out.println("4 - by Year of release: ");
+                System.out.println("5 - to return to Search: ");
                 while (true) {
                     String userInput = scanner.nextLine();
                     if (userInput.equals("1")) {
