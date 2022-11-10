@@ -1,3 +1,4 @@
 username; password; age; watchedmedia; savedmedia;
 admin; admin123; 99; The Godfather, Citizen Kane; The Godfather part II;
 TestUser; TestUser123; 20; The Godfather, Citizen Kane; The Godfather part II;
+Skarn; SkarnIsAwesome; 29; Titanic; ;
