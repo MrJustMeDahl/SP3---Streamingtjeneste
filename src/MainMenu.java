@@ -75,7 +75,7 @@ public class MainMenu {
             System.out.println("We have found these options you might like: ");
             System.out.println("1 - " + suggestion1.getName() + ".");
             System.out.println("2 - " + suggestion2.getName() + ".");
-            System.out.println("3 - " + suggestion3.getName() + ".");
+            System.out.println("3 - " + suggestion3.getName() + ".\n");
             System.out.println("4 - Go back to main menu.");
             String userInput = scanner.nextLine().trim();
             switch (userInput) {
@@ -136,9 +136,9 @@ public class MainMenu {
 //*********
     private void searchEngine() {
         System.out.println("Search options: ");
-        System.out.println("Press '1' for Movie: ");
-        System.out.println("Press '2' for Series: ");
-        System.out.println("Press '3' to return to Main");
+        System.out.println("1 - by Movie: ");
+        System.out.println("2 - by Series: ");
+        System.out.println("3 - to return to Main");
         while (true) {
             String userInput = scanner.nextLine();
             if (userInput.equals("1")) {
@@ -160,11 +160,11 @@ public class MainMenu {
 //*********
     private AMedia searchMovies() {
         System.out.println("Movies: ");
-        System.out.println("Press '1' for Name: ");
-        System.out.println("Press '2' for Category: ");
-        System.out.println("Press '3' for Rating: ");
-        System.out.println("Press '4' by Year: ");
-        System.out.println("Press '5' to return to Search: ");
+        System.out.println("1 - by Name: ");
+        System.out.println("2 - by Category: ");
+        System.out.println("3 - by Rating: ");
+        System.out.println("4 - by Year of release: ");
+        System.out.println("5 - to return to Search: ");
         while (true) {
             String userInput = scanner.nextLine();
 
@@ -238,11 +238,11 @@ public class MainMenu {
 //*********
             private AMedia searchSeries () {
                 System.out.println("Series: ");
-                System.out.println("Press '1' for Name: ");
-                System.out.println("Press '2' for Category: ");
-                System.out.println("Press '3' for Rating: ");
-                System.out.println("Press '4' for Year of release: ");
-                System.out.println("Press '5' to return to Search: ");
+                System.out.println("1 - by Name: ");
+                System.out.println("2 - by Category: ");
+                System.out.println("3 - by Rating: ");
+                System.out.println("4 - by Year of release: ");
+                System.out.println("5 - to return to Search: ");
                 while (true) {
                     String userInput = scanner.nextLine();
                     if (userInput.equals("1")) {
@@ -270,18 +270,44 @@ public class MainMenu {
 //*********
 //Search by Name
 //*********
-            private void searchByMediaName (ArrayList < AMedia > Media) {
-                //System.out.println("LISTE OVER TILGÆNGELIGE MEDIER: " );
-                System.out.println("Please enter the name of the movie you wish to see: ");
-                System.out.println("The option you have chosen does not exist.\n" + "Please try again: ");
+            private void searchByMediaName (ArrayList < AMedia > listOfMedia) {
 
+                System.out.println("Please enter the Title you wish to see: ");
+                String userInput = scanner.nextLine();
+                ArrayList<AMedia> mediaByName = new ArrayList<>();
+                for (AMedia m : listOfMedia) {
+                    if (m.getName().toLowerCase().contains(userInput.toLowerCase())) {
+                        mediaByName.add(m);
+                    }
+
+                }
+                System.out.println("You can choose the following: \n");
+
+                for( int i =0; i<mediaByName.size(); i++ ){
+                    System.out.println(i+1+" - " + mediaByName.get(i).getName());
+                }
+                String input2 = scanner.nextLine();
+                int userInput2 = -1;
+                try {
+                    userInput2 = Integer.parseInt(input2);
+                    if (userInput2 > mediaByName.size() || userInput2 <= 0) {
+                        System.out.println("The chosen movie doesn't exist, please try again.");
+                        searchByMediaName(listOfMedia);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("The chosen movie doesn't exist, please try again. ");
+                    searchByMediaName(listOfMedia);
+                }
+                mediaByName.get(userInput2 -1).chooseMedia();
             }
 
 //*********
 //Choose a Category to search from
 //*********
             private void searchByCategory (ArrayList < AMedia > listOfMedia) {
-                System.out.println("Choose a Category you wish to watch: ");
+                System.out.println("Choose your desired Category: ");
                 for (int i = 0; i < allcategories.size(); i++) {
                     System.out.println(i + 1 + " - " + allcategories.get(i));
                 }
@@ -310,7 +336,7 @@ public class MainMenu {
                     }
 
                 }
-                System.out.println("Please choose a movie from the list");
+                System.out.println("Please choose a desired movie from the list");
                 for (int i = 0; i < MediaFromCategory.size(); i++) {
                     System.out.println(i + 1 + " - " + MediaFromCategory.get(i).getName());
                 }
@@ -345,7 +371,7 @@ public class MainMenu {
 
                     minimumRating = Double.parseDouble(userInput.replace(",", "."));
                     if (minimumRating <= 0 || minimumRating > 10) {
-                        System.out.println("The typed Rating doesn't exist, please try again: ");
+                        System.out.println("The typed Rating is either too low or too high, please try again: ");
                         searchByRating(Media);
                     }
 
@@ -388,7 +414,7 @@ public class MainMenu {
 //Search by Year of release
 //*********
             private void searchByYear(ArrayList<AMedia> Media) {
-                System.out.println("Please enter the year you want to search by: ");
+                System.out.println("Please enter the desired year of release.");
                 String userInput = scanner.nextLine();
                 int yearOfRelease = -1;
                 try {
