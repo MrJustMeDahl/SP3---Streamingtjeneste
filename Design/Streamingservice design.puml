@@ -4,19 +4,33 @@ Main <|-- ProgramControl
 ProgramControl *-- StartMenu
 ProgramControl *-- MainMenu
 ProgramControl *-- User
-
-MainMenu *-- AMedia
+ProgramControl *-- FileHandling
+MainMenu *-- Search
+Search *-- AMedia
 AMedia <|-- Movie
 AMedia <|-- Series
 
+class Search{
+- Scanner scanner
+- ArrayList<AMedia> allMovies
+- ArrayList<AMedia> allSeries
+- ArrayList<String> allCategories
++ Search(ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries, ArrayList<String> allCategories)
++ void searchEngine()
++ void searchBySavedMedia()
++ void searchByWatchedMedia()
+}
 class ProgramControl{
 - ArrayList<User> allUsers
 - ArrayList<AMedia> allMedia
++ static MainMenu mainMenu
 + static User currentUser
 + void runProgram()
 }
 
 class StartMenu{
+- Scanner scanner
+- ArrayList<User> allUsers
 + StartMenu(ArrayList<User> allUsers)
 + User runStartMenu()
 - User login()
@@ -24,11 +38,18 @@ class StartMenu{
 }
 
 class MainMenu{
-+ MainMenu(ArrayList<AMedia> allMedia)
+- Search search
+- ArrayList<User> allUsers
+- ArrayList<AMedia> allMovies
+- ArrayList<AMedia> allSeries
+- ArrayList<String> allCategories
+- Random rnd
+- Scanner scanner
++ MainMenu(ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries)
 + void runMainMenu()
-- String[3] suggestedMedia()
-- void searchEngine()
+- void suggestedMedia()
 - void logOut()
+- void userOptions()
 }
 
 abstract class AMedia{
@@ -36,9 +57,14 @@ abstract class AMedia{
 - String category
 - float rating
 - int releaseYear
+- Scanner sc
 + AMedia(String name, String category, float rating, int releaseYear)
-+ abstract void playMedia()
-+ getter()
+# abstract void playMedia(AMedia media)
++ void chooseMedia()
++ String getName()
++ String getCategory()
++ float getRating()
++ int getReleaseYear()
 }
 
 class Movie{
@@ -50,7 +76,7 @@ class Series{
 - int season
 - int episode
 - int endYear
-+ Series (String name, String category, float rating, int releaseYear, int season, int episode)
++ Series (String name, String category, float rating, int releaseYear, int season, int episode, int endYear)
 + void playMedia()
 }
 
@@ -62,7 +88,9 @@ class User{
 - ArrayList<AMedia> savedMedia
 + User(String userName, String password, int age, ArrayList<AMedia>(), ArrayList<AMedia>())
 + String getUsername()
++ void setUsername()
 + String getPassword()
++ void setPassword()
 + int getAge()
 + ArrayList<AMedia> getWatchedMedia()
 + ArrayList<AMedia> getSavedMedia()
@@ -72,6 +100,7 @@ class User{
 }
 
 class FileHandling{
++ static ArrayList<String> readFromCategoryFile(string path)
 + static ArrayList<AMedia> readFromMovieFile(String path)
 + static ArrayList<AMedia> readFromSeriesFile(String path)
 + static ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia)

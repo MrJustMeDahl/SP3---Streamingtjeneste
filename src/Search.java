@@ -9,7 +9,7 @@ private final Scanner scanner = new Scanner(System.in);
     private final ArrayList<AMedia> allSeries;
     private final ArrayList<String> allCategories;
 
-public Search  (ArrayList<AMedia>allMovies,ArrayList<AMedia>allSeries,ArrayList<String>allCategories) {
+public Search  (ArrayList<AMedia>allMovies, ArrayList<AMedia>allSeries, ArrayList<String>allCategories) {
   this.allMovies = allMovies;
   this.allSeries=allSeries;
   this.allCategories = allCategories;
