@@ -1,7 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
-import javax.naming.Name;
-
 import static java.lang.Thread.sleep;
 
 public class Series extends AMedia{

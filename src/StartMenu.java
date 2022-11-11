@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class StartMenu {
-ArrayList<User> allUsers = new ArrayList<>();
+ArrayList<User> allUsers;
 Scanner scanner = new Scanner(System.in);
 
 public StartMenu(ArrayList<User> allUsers){

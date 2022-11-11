@@ -4,14 +4,12 @@ import static java.lang.Thread.sleep;
 
 public class Search {
 
-private Scanner scanner = new Scanner(System.in);
-    private ArrayList<AMedia> allMedia;
-    private ArrayList<AMedia> allMovies;
-    private ArrayList<AMedia> allSeries;
-    private ArrayList<String> allCategories;
+private final Scanner scanner = new Scanner(System.in);
+    private final ArrayList<AMedia> allMovies;
+    private final ArrayList<AMedia> allSeries;
+    private final ArrayList<String> allCategories;
 
-public Search  (ArrayList<AMedia>allMedia,ArrayList<AMedia>allMovies,ArrayList<AMedia>allSeries,ArrayList<String>allCategories) {
-  this.allMedia = allMedia;
+public Search  (ArrayList<AMedia>allMovies,ArrayList<AMedia>allSeries,ArrayList<String>allCategories) {
   this.allMovies = allMovies;
   this.allSeries=allSeries;
   this.allCategories = allCategories;

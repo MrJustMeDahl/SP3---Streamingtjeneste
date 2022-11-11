@@ -5,21 +5,19 @@ import java.util.Scanner;
 import static java.lang.Thread.sleep;
 
 public class MainMenu {
-    private Search search;
-    private ArrayList<User> allUsers;
-    private ArrayList<AMedia> allMedia;
-    private ArrayList<AMedia> allMovies;
-    private ArrayList<AMedia> allSeries;
-    private ArrayList<String> allcategories = FileHandling.readFromCategoryFile("Data/Categories.txt");
-    private Random rnd = new Random();
-    private Scanner scanner = new Scanner(System.in);
+    private final Search search;
+    private final ArrayList<User> allUsers;
+    private final ArrayList<AMedia> allMovies;
+    private final ArrayList<AMedia> allSeries;
+    private final ArrayList<String> allCategories = FileHandling.readFromCategoryFile("Data/Categories.txt");
+    private final Random rnd = new Random();
+    private final Scanner scanner = new Scanner(System.in);
 
-    public MainMenu(ArrayList<AMedia> allMedia, ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries) {
-        this.allMedia = allMedia;
+    public MainMenu(ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries) {
         this.allUsers = allUsers;
         this.allMovies = allMovies;
         this.allSeries = allSeries;
-        search = new Search(allMedia, allMovies, allSeries, allcategories);
+        search = new Search(this.allMovies, this.allSeries, allCategories);
     }
 
     public void runMainMenu() {
@@ -60,7 +58,7 @@ public class MainMenu {
 
     private void suggestedMedia() {
         ArrayList<AMedia> allMoviesAltered = allMovies;
-        String chosenCategory = "";
+        String chosenCategory;
         AMedia suggestion1 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
         AMedia suggestion2 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
         AMedia suggestion3 = allMoviesAltered.get(rnd.nextInt(0, allMoviesAltered.size()));
@@ -137,7 +135,7 @@ public class MainMenu {
         System.out.println("We look forward to see you again!");
         try {
             sleep(5000);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e){
 
         }
         for (int i = 0; i < 25; i++) {
