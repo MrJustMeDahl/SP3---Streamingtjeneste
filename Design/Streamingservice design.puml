@@ -4,11 +4,17 @@ Main <|-- ProgramControl
 ProgramControl *-- StartMenu
 ProgramControl *-- MainMenu
 ProgramControl *-- User
-ProgramControl *-- FileHandling
+ProgramControl *-- DataHandling
+DataHandling *-- FileHandling
+DataHandling *-- DatabaseHandling
 MainMenu *-- Search
 Search *-- AMedia
 AMedia <|-- Movie
 AMedia <|-- Series
+
+interface DataHandling
+
+class DatabaseHandling
 
 class Search{
 - Scanner scanner
