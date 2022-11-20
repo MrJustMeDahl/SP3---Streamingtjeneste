@@ -131,6 +131,10 @@ public class MainMenu {
     }
 
     public void logOut() {
+        if (dataBaseCon.equals true){
+            FileHandling.
+            System.out.println("We look forward to see you again!");
+        }else
         FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
         System.out.println("We look forward to see you again!");
         try {

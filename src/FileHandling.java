@@ -2,11 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandling {
-
     public static ArrayList<AMedia> readFromMovieFile(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
@@ -148,4 +148,5 @@ public class FileHandling {
         }
         return listOfCategories;
     }
+
 }
