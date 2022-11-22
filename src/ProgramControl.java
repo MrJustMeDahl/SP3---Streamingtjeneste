@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProgramControl {
@@ -9,14 +10,14 @@ public class ProgramControl {
     public static DataHandling dataHandling;
 
     public ProgramControl(){
-        if(DatabaseHandling.connection.isValid()){
-            this.dataHandling = new DatabaseHandling();
-        } else {
-            this.dataHandling = new FileHandling();
-        }
     }
 
     public void runProgram(){
+        dataHandling = new DatabaseHandling();
+        DatabaseHandling database = (DatabaseHandling) dataHandling;
+        if(!database.isDatabaseOnline){
+            dataHandling = new FileHandling();
+        }
         ArrayList<AMedia> movieList = dataHandling.readMovieData("Data/MovieData.txt");
         ArrayList<AMedia> seriesList = dataHandling.readSeriesData("Data/SeriesData.txt");
         for(AMedia m: movieList){
