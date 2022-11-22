@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class FileHandling implements DataHandling{
 
+    @Override
     public ArrayList<AMedia> readMovieData(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
@@ -30,6 +31,7 @@ public class FileHandling implements DataHandling{
         return mediaFromFiles;
     }
 
+    @Override
     public ArrayList<AMedia> readSeriesData(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
@@ -66,6 +68,7 @@ public class FileHandling implements DataHandling{
         return mediaFromFiles;
     }
 
+    @Override
     public ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia){
         ArrayList<User> usersFromFile = new ArrayList<>();
         File userFile = new File(path);
@@ -105,6 +108,7 @@ public class FileHandling implements DataHandling{
         return usersFromFile;
     }
 
+    @Override
     public void writeUserData(String path, ArrayList<User> allUsers){
         File userFile = new File(path);
         try{
@@ -133,6 +137,7 @@ public class FileHandling implements DataHandling{
         }
     }
 
+    @Override
     public ArrayList<String> readFromCategoryFile(String path){
         ArrayList<String> listOfCategories = new ArrayList<>();
         File file = new File(path);
