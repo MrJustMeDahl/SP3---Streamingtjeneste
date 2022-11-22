@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public interface DataHandling {
 
-    ArrayList<AMedia> readFromMovieFile(String path);
-    ArrayList<AMedia> readFromSeriesFile(String path);
-    ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia);
-    void writeToUserFile(String path, ArrayList<User> allUsers);
-    ArrayList<String> readFromCategoryFile(String path);
+    public ArrayList<AMedia> readMovieData(String path);
+    public ArrayList<AMedia> readSeriesData(String path);
+    public ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia);
+    public void writeUserData (String path, ArrayList<User> allUsers);
+    public ArrayList<String> readFromCategoryFile(String path);
 
 }

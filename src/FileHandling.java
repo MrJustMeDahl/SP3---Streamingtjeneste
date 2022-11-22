@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileHandling {
+public class FileHandling implements DataHandling{
 
-    public static ArrayList<AMedia> readFromMovieFile(String path){
+    public ArrayList<AMedia> readMovieData(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
         try {
@@ -30,7 +30,7 @@ public class FileHandling {
         return mediaFromFiles;
     }
 
-    public static ArrayList<AMedia> readFromSeriesFile(String path){
+    public ArrayList<AMedia> readSeriesData(String path){
         ArrayList<AMedia> mediaFromFiles = new ArrayList<>();
         File file = new File(path);
         try {
@@ -66,7 +66,7 @@ public class FileHandling {
         return mediaFromFiles;
     }
 
-    public static ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia){
+    public ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia){
         ArrayList<User> usersFromFile = new ArrayList<>();
         File userFile = new File(path);
         try {
@@ -105,7 +105,7 @@ public class FileHandling {
         return usersFromFile;
     }
 
-    public static void writeToUserFile(String path, ArrayList<User> allUsers){
+    public void writeUserData(String path, ArrayList<User> allUsers){
         File userFile = new File(path);
         try{
             FileWriter writer = new FileWriter(userFile);
@@ -133,7 +133,7 @@ public class FileHandling {
         }
     }
 
-    public static ArrayList<String> readFromCategoryFile(String path){
+    public ArrayList<String> readFromCategoryFile(String path){
         ArrayList<String> listOfCategories = new ArrayList<>();
         File file = new File(path);
         try{

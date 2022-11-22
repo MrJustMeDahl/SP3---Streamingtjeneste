@@ -9,7 +9,7 @@ public class MainMenu {
     private final ArrayList<User> allUsers;
     private final ArrayList<AMedia> allMovies;
     private final ArrayList<AMedia> allSeries;
-    private final ArrayList<String> allCategories = FileHandling.readFromCategoryFile("Data/Categories.txt");
+    private final ArrayList<String> allCategories = ProgramControl.dataHandling.readFromCategoryFile("Data/Categories.txt");
     private final Random rnd = new Random();
     private final Scanner scanner = new Scanner(System.in);
 
@@ -131,7 +131,7 @@ public class MainMenu {
     }
 
     public void logOut() {
-        FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
+        ProgramControl.dataHandling.writeUserData("Data/UserData.txt", allUsers);
         System.out.println("We look forward to see you again!");
         try {
             sleep(5000);

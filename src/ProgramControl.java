@@ -6,20 +6,26 @@ public class ProgramControl {
     private ArrayList<AMedia> allMedia = new ArrayList<>();
     public static User currentUser;
     public static MainMenu mainMenu;
+    public static DataHandling dataHandling;
 
     public ProgramControl(){
+        if(DatabaseHandling.connection.isValid()){
+            this.dataHandling = new DatabaseHandling();
+        } else {
+            this.dataHandling = new FileHandling();
+        }
     }
 
     public void runProgram(){
-        ArrayList<AMedia> movieList = FileHandling.readFromMovieFile("Data/MovieData.txt");
-        ArrayList<AMedia> seriesList = FileHandling.readFromSeriesFile("Data/SeriesData.txt");
+        ArrayList<AMedia> movieList = dataHandling.readMovieData("Data/MovieData.txt");
+        ArrayList<AMedia> seriesList = dataHandling.readSeriesData("Data/SeriesData.txt");
         for(AMedia m: movieList){
             allMedia.add(m);
         }
         for(AMedia m: seriesList){
             allMedia.add(m);
         }
-        allUsers = FileHandling.readFromUserFile("Data/UserData.txt", allMedia);
+        allUsers = dataHandling.readUserData("Data/UserData.txt", allMedia);
 
         StartMenu startMenu = new StartMenu(allUsers);
         currentUser = startMenu.runStartMenu();
@@ -30,6 +36,6 @@ public class ProgramControl {
         mainMenu = new MainMenu(allUsers, movieList, seriesList);
         mainMenu.runMainMenu();
 
-        FileHandling.writeToUserFile("Data/UserData.txt", allUsers);
+        dataHandling.writeUserData("Data/UserData.txt", allUsers);
     }
 }
