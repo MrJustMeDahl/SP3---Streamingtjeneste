@@ -10,9 +10,17 @@ public class Movie extends AMedia {
     protected void playMedia(AMedia media) {
         if (ProgramControl.currentUser.getSavedMedia().contains(media)) {
             ProgramControl.currentUser.removeSavedMedia(media);
+            if (ProgramControl.usingDatabase) {
+                DatabaseHandling database = (DatabaseHandling) ProgramControl.dataHandling;
+                database.removeSavedMovie(this);
+            }
         }
         if (!ProgramControl.currentUser.getWatchedMedia().contains(media)) {
             ProgramControl.currentUser.addWatchedMedia(media);
+            if (ProgramControl.usingDatabase) {
+                DatabaseHandling database = (DatabaseHandling) ProgramControl.dataHandling;
+                database.addWatchedMovie(this);
+            }
         }
         System.out.println("You are now watching : " + name);
         try {
