@@ -171,7 +171,16 @@ public class DatabaseHandling implements DataHandling{
     public ArrayList<String> readFromCategoryFile(String path) {
         establishConnection();
         ArrayList<String> categoriesFromData = new ArrayList<>();
-        
+        String query = "SELECT * FROM categories";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                categoriesFromData.add(result.getString("CategoryName"));
+            }
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
         closeConnection();
         return categoriesFromData;
     }
