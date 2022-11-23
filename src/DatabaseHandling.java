@@ -204,24 +204,10 @@ public class DatabaseHandling implements DataHandling{
 
     public void addSavedMovie(AMedia media){
         establishConnection();
-        String movieQuery = "SELECT * FROM movies WHERE movies.MovieName = ?";
-        String userQuery = "SELECT * FROM users WHERE users.Username = ?";
         String insertQuery = "INSERT INTO savedmovies (UserID, MovieID) VALUES (?, ?)";
         try{
-            PreparedStatement identifyMovie = connection.prepareStatement(movieQuery);
-            identifyMovie.setString(1, media.getName());
-            ResultSet movieResult = identifyMovie.executeQuery();
-            int movieID = 0;
-            while(movieResult.next()) {
-                movieID = movieResult.getInt("MovieID");
-            }
-            PreparedStatement identifyUser = connection.prepareStatement(userQuery);
-            identifyUser.setString(1, ProgramControl.currentUser.getUsername());
-            ResultSet userResult = identifyUser.executeQuery();
-            int userID = 0;
-            while(userResult.next()) {
-                userID = userResult.getInt("UserID");
-            }
+            int movieID = findMovieID(media);
+            int userID = findUserID();
             PreparedStatement insertSavedMovie = connection.prepareStatement(insertQuery);
             insertSavedMovie.setString(1, "" + userID);
             insertSavedMovie.setString(2, "" + movieID);
@@ -234,25 +220,10 @@ public class DatabaseHandling implements DataHandling{
 
     public void addSavedSeries(AMedia media){
         establishConnection();
-        String seriesQuery = "SELECT * FROM series WHERE series.SeriesName = ?";
-        String userQuery = "SELECT * FROM users WHERE users.Username = ?";
         String insertQuery = "INSERT INTO savedseries (UserID, SeriesID) VALUES (?, ?)";
-        Series series = (Series) media;
         try{
-            PreparedStatement identifySeries = connection.prepareStatement(seriesQuery);
-            identifySeries.setString(1, series.getDatabaseName());
-            ResultSet seriesResult = identifySeries.executeQuery();
-            int seriesID = 0;
-            while(seriesResult.next()) {
-                seriesID = seriesResult.getInt("SeriesID");
-            }
-            PreparedStatement identifyUser = connection.prepareStatement(userQuery);
-            identifyUser.setString(1, ProgramControl.currentUser.getUsername());
-            ResultSet userResult = identifyUser.executeQuery();
-            int userID = 0;
-            while(userResult.next()) {
-                userID = userResult.getInt("UserID");
-            }
+            int seriesID = findSeriesID(media);
+            int userID = findUserID();
             PreparedStatement insertSavedMovie = connection.prepareStatement(insertQuery);
             insertSavedMovie.setString(1, "" + userID);
             insertSavedMovie.setString(2, "" + seriesID);
@@ -265,24 +236,10 @@ public class DatabaseHandling implements DataHandling{
 
     public void removeSavedMovie(AMedia media){
         establishConnection();
-        String movieQuery = "SELECT * FROM movies WHERE movies.MovieName = ?";
-        String userQuery = "SELECT * FROM users WHERE users.Username = ?";
         String deleteQuery = "DELETE FROM savedmovies WHERE savedmovies.UserID = ? AND savedmovies.MovieID = ?";
         try{
-            PreparedStatement identifyMovie = connection.prepareStatement(movieQuery);
-            identifyMovie.setString(1, media.getName());
-            ResultSet movieResult = identifyMovie.executeQuery();
-            int movieID = 0;
-            while(movieResult.next()) {
-                movieID = movieResult.getInt("MovieID");
-            }
-            PreparedStatement identifyUser = connection.prepareStatement(userQuery);
-            identifyUser.setString(1, ProgramControl.currentUser.getUsername());
-            ResultSet userResult = identifyUser.executeQuery();
-            int userID = 0;
-            while(userResult.next()) {
-                userID = userResult.getInt("UserID");
-            }
+            int movieID = findMovieID(media);
+            int userID = findUserID();
             PreparedStatement deleteSavedMovie = connection.prepareStatement(deleteQuery);
             deleteSavedMovie.setString(1, "" + userID);
             deleteSavedMovie.setString(2, "" + movieID);
@@ -295,25 +252,10 @@ public class DatabaseHandling implements DataHandling{
 
     public void removeSavedSeries(AMedia media){
         establishConnection();
-        String seriesQuery = "SELECT * FROM series WHERE series.SeriesName = ?";
-        String userQuery = "SELECT * FROM users WHERE users.Username = ?";
         String deleteQuery = "DELETE FROM savedseries WHERE savedseries.UserID = ? AND savedseries.seriesID = ?";
-        Series series = (Series) media;
         try{
-            PreparedStatement identifySeries = connection.prepareStatement(seriesQuery);
-            identifySeries.setString(1, series.getDatabaseName());
-            ResultSet seriesResult = identifySeries.executeQuery();
-            int seriesID = 0;
-            while(seriesResult.next()) {
-                seriesID = seriesResult.getInt("SeriesID");
-            }
-            PreparedStatement identifyUser = connection.prepareStatement(userQuery);
-            identifyUser.setString(1, ProgramControl.currentUser.getUsername());
-            ResultSet userResult = identifyUser.executeQuery();
-            int userID = 0;
-            while(userResult.next()) {
-                userID = userResult.getInt("UserID");
-            }
+            int seriesID = findSeriesID(media);
+            int userID = findUserID();
             PreparedStatement deleteSavedMovie = connection.prepareStatement(deleteQuery);
             deleteSavedMovie.setString(1, "" + userID);
             deleteSavedMovie.setString(2, "" + seriesID);
@@ -322,5 +264,87 @@ public class DatabaseHandling implements DataHandling{
             throw new RuntimeException();
         }
         closeConnection();
+    }
+
+    public void addWatchedMovie(AMedia media){
+        establishConnection();
+        String insertQuery = "INSERT INTO watchedmovies (UserID, MovieID) VALUES (?, ?)";
+        try{
+            int movieID = findMovieID(media);
+            int userID = findUserID();
+            PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+            insertStatement.setString(1, "" + userID);
+            insertStatement.setString(2, "" + movieID);
+            insertStatement.execute();
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        closeConnection();
+    }
+
+    public void addWatchedSeries(AMedia media){
+        establishConnection();
+        String insertQuery = "INSERT INTO watchedseries (UserID, SeriesID) VALUES (?, ?)";
+        try{
+            int seriesID = findSeriesID(media);
+            int userID = findUserID();
+            PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+            insertStatement.setString(1, "" + userID);
+            insertStatement.setString(2, "" + seriesID);
+            insertStatement.execute();
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        closeConnection();
+    }
+
+    private int findMovieID(AMedia media){
+        String movieQuery = "SELECT * FROM movies WHERE movies.MovieName = ?";
+        int movieID = 0;
+        try {
+            PreparedStatement identifyMovie = connection.prepareStatement(movieQuery);
+            identifyMovie.setString(1, media.getName());
+            ResultSet movieResult = identifyMovie.executeQuery();
+
+            while (movieResult.next()) {
+                movieID = movieResult.getInt("MovieID");
+            }
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return movieID;
+    }
+
+    private int findSeriesID(AMedia media){
+        String seriesQuery = "SELECT * FROM series WHERE series.SeriesName = ?";
+        Series series = (Series) media;
+        int seriesID = 0;
+        try {
+            PreparedStatement identifySeries = connection.prepareStatement(seriesQuery);
+            identifySeries.setString(1, series.getDatabaseName());
+            ResultSet seriesResult = identifySeries.executeQuery();
+            while (seriesResult.next()) {
+                seriesID = seriesResult.getInt("SeriesID");
+            }
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return seriesID;
+    }
+
+    private int findUserID(){
+        String userQuery = "SELECT * FROM users WHERE users.Username = ?";
+        int userID = 0;
+        try {
+            PreparedStatement identifyUser = connection.prepareStatement(userQuery);
+            identifyUser.setString(1, ProgramControl.currentUser.getUsername());
+            ResultSet userResult = identifyUser.executeQuery();
+            while (userResult.next()) {
+                userID = userResult.getInt("UserID");
+            }
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return userID;
     }
 }
