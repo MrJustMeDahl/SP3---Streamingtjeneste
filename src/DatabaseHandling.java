@@ -164,6 +164,21 @@ public class DatabaseHandling implements DataHandling{
     @Override
     public void writeUserData(String path, ArrayList<User> allUsers) {
         establishConnection();
+        String clearTable = "TRUNCATE users";
+        String insertUser = "INSERT INTO users (Username, Password, Age) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement clearStatement = connection.prepareStatement(clearTable);
+            clearStatement.execute();
+            PreparedStatement insertStatement = connection.prepareStatement(insertUser);
+            for(User u: allUsers){
+                insertStatement.setString(1, u.getUsername());
+                insertStatement.setString(2, u.getPassword());
+                insertStatement.setString(3, "" + u.getAge());
+                insertStatement.execute();
+            }
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
         closeConnection();
     }
 
