@@ -9,7 +9,7 @@ public class MainMenu {
     private final ArrayList<User> allUsers;
     private final ArrayList<AMedia> allMovies;
     private final ArrayList<AMedia> allSeries;
-    private final ArrayList<String> allCategories = ProgramControl.dataHandling.readFromCategoryFile("Data/Categories.txt");
+    private final ArrayList<String> allCategories = ProgramControl.dataHandling.readCategoryData("Data/Categories.txt");
     private final Random rnd = new Random();
     private final Scanner scanner = new Scanner(System.in);
 

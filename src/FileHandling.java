@@ -138,7 +138,7 @@ public class FileHandling implements DataHandling{
     }
 
     @Override
-    public ArrayList<String> readFromCategoryFile(String path){
+    public ArrayList<String> readCategoryData(String path){
         ArrayList<String> listOfCategories = new ArrayList<>();
         File file = new File(path);
         try{

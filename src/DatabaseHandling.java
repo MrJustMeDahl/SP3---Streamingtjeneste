@@ -168,7 +168,7 @@ public class DatabaseHandling implements DataHandling{
     }
 
     @Override
-    public ArrayList<String> readFromCategoryFile(String path) {
+    public ArrayList<String> readCategoryData(String path) {
         establishConnection();
         ArrayList<String> categoriesFromData = new ArrayList<>();
         String query = "SELECT * FROM categories";
