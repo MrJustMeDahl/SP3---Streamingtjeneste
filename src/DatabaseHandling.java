@@ -95,8 +95,70 @@ public class DatabaseHandling implements DataHandling{
     @Override
     public ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia) {
         establishConnection();
+        ArrayList<User> usersFromData = new ArrayList<>();
+        String query1 = "SELECT * FROM users";
+        String query2 = "SELECT * FROM watchedmovies JOIN movies ON watchedmovies.MovieID = movies.MovieID WHERE UserID = ?";
+        String query3 = "SELECT * FROM watchedseries JOIN series ON watchedseries.SeriesID = series.SeriesID WHERE UserID = ?";
+        String query4 = "SELECT * FROM savedmovies JOIN movies ON savedmovies.MovieID = movies.MovieID WHERE UserID = ?";
+        String query5 = "SELECT * FROM savedseries JOIN series ON savedseries.SeriesID = series.SeriesID WHERE UserID = ?";
+        try{
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            PreparedStatement statement3 = connection.prepareStatement(query3);
+            PreparedStatement statement4 = connection.prepareStatement(query4);
+            PreparedStatement statement5 = connection.prepareStatement(query5);
+            ResultSet result1 = statement1.executeQuery();
+            while(result1.next()) {
+                String userID = result1.getString("UserID");
+                String username = result1.getString("Username");
+                String password = result1.getString("Password");
+                int age = result1.getInt("Age");
+                ArrayList<AMedia> watchedMedia = new ArrayList<>();
+                statement2.setString(1, userID);
+                ResultSet result2 = statement2.executeQuery();
+                while(result2.next()){
+                    for(AMedia m: allMedia){
+                        if(result2.getString("MovieName").equals(m.getName())){
+                            watchedMedia.add(m);
+                        }
+                    }
+                }
+                statement3.setString(1, userID);
+                ResultSet result3 = statement3.executeQuery();
+                while(result3.next()){
+                    for(AMedia m: allMedia){
+                        if(m.getName().contains(result3.getString("SeriesName"))){
+                            watchedMedia.add(m);
+                        }
+                    }
+                }
+                ArrayList<AMedia> savedMedia = new ArrayList<>();
+                statement4.setString(1, userID);
+                ResultSet result4 = statement4.executeQuery();
+                while(result4.next()){
+                    for(AMedia m: allMedia){
+                        if(result4.getString("MovieName").equals(m.getName())) {
+                            savedMedia.add(m);
+                        }
+                    }
+                }
+                statement5.setString(1, userID);
+                ResultSet result5 = statement5.executeQuery();
+                while(result5.next()){
+                    for(AMedia m: allMedia){
+                        if(m.getName().contains(result5.getString("SeriesName"))) {
+                            savedMedia.add(m);
+                        }
+                    }
+                }
+                User user = new User(username, password, age, watchedMedia, savedMedia);
+                usersFromData.add(user);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
         closeConnection();
-        return null;
+        return usersFromData;
     }
 
     @Override
@@ -108,7 +170,9 @@ public class DatabaseHandling implements DataHandling{
     @Override
     public ArrayList<String> readFromCategoryFile(String path) {
         establishConnection();
+        ArrayList<String> categoriesFromData = new ArrayList<>();
+        
         closeConnection();
-        return null;
+        return categoriesFromData;
     }
 }
