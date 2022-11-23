@@ -5,15 +5,20 @@ public class Series extends AMedia{
     private int episode;
     private int season;
     private int endYear;
+    private String databaseName;
     public Series(String name, String category, float rating, int releaseYear, int season, int episode, int endYear) {
 
         super(name, category, rating, releaseYear);
         this.season = season;
         this.episode = episode;
         this.endYear = endYear;
-        super.name += season + "-" + episode;
+        this.databaseName = super.name;
+        super.name += " " + season + "-" + episode;
     }
 
+    public String getDatabaseName(){
+        return databaseName;
+    }
 
     public int getEpisode() {
         return episode;

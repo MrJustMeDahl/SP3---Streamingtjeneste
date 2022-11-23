@@ -53,8 +53,24 @@ public abstract class AMedia {
             case "2":
                 if(ProgramControl.currentUser.getSavedMedia().contains(this)){
                     ProgramControl.currentUser.removeSavedMedia(this);
+                    if(ProgramControl.usingDatabase){
+                        DatabaseHandling database = (DatabaseHandling) ProgramControl.dataHandling;
+                        if(this.getClass() == Movie.class){
+                            database.removeSavedMovie(this);
+                        } else if(this.getClass() == Series.class){
+                            database.removeSavedSeries(this);
+                        }
+                    }
                 } else {
                     ProgramControl.currentUser.addSavedMedia(this);
+                    if(ProgramControl.usingDatabase) {
+                        DatabaseHandling database = (DatabaseHandling) ProgramControl.dataHandling;
+                        if (this.getClass() == Movie.class) {
+                            database.addSavedMovie(this);
+                        } else if (this.getClass() == Series.class) {
+                            database.addSavedSeries(this);
+                        }
+                    }
                 }
                 ProgramControl.mainMenu.runMainMenu();
                 break;

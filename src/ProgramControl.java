@@ -8,6 +8,7 @@ public class ProgramControl {
     public static User currentUser;
     public static MainMenu mainMenu;
     public static DataHandling dataHandling;
+    public static boolean usingDatabase = false;
 
     public ProgramControl(){
     }
@@ -17,6 +18,8 @@ public class ProgramControl {
         DatabaseHandling database = (DatabaseHandling) dataHandling;
         if(!database.isDatabaseOnline){
             dataHandling = new FileHandling();
+        } else {
+            usingDatabase = true;
         }
         ArrayList<AMedia> movieList = dataHandling.readMovieData("Data/MovieData.txt");
         ArrayList<AMedia> seriesList = dataHandling.readSeriesData("Data/SeriesData.txt");
