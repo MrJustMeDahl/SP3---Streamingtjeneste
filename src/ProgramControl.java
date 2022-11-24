@@ -35,6 +35,7 @@ public class ProgramControl {
         currentUser = startMenu.runStartMenu();
         if(!allUsers.contains(currentUser)){
             allUsers.add(currentUser);
+            ProgramControl.dataHandling.writeUserData("Data/UserData.txt", allUsers);
         }
 
         mainMenu = new MainMenu(allUsers, movieList, seriesList);

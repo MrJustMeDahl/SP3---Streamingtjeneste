@@ -89,7 +89,7 @@ private User createNewUser(){
 
      }
      }
-     return new User(userName, password, age, new ArrayList<AMedia>(), new ArrayList<AMedia>());
+     return new User(userName, password, age, new ArrayList<>(), new ArrayList<>());
 
    }
 }
