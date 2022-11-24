@@ -13,15 +13,37 @@ AMedia <|-- Movie
 AMedia <|-- Series
 
 interface DataHandling{
-ArrayList<AMedia> readFromMovieFile(String path)
-    ArrayList<AMedia> readFromSeriesFile(String path)
-    ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia)
-    void writeToUserFile(String path, ArrayList<User> allUsers)
-    ArrayList<String> readFromCategoryFile(String path)
-    }
++ ArrayList<AMedia> readFromMovieFile(String path)
++ ArrayList<AMedia> readFromSeriesFile(String path)
++ ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia)
++ void writeToUserFile(String path, ArrayList<User> allUsers)
++ ArrayList<String> readFromCategoryFile(String path)
+}
 
-class DatabaseHandling
+class DatabaseHandling{
++ Connection connection
+- String url
+- String username
+- String password
++ boolean isDatabaseOnline
 
++ void closeConnection()
+- void establishConnection()
++ ArrayList<AMedia> readMovieData(String path)
++ ArrayList<AMedia> readSeriesData(String path)
++ ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia)
++ void writeUserData(String path, ArrayList<User> allUsers)
++ ArrayList<String> readCategoryData(String path)
++ void addSavedMovie(AMedia media)
++ void addSavedSeries(AMedia media)
++ void removeSavedMovie(AMedia media)
++ void removeSavedSeries(AMedia media)
++ void addWatchedMovie(AMedia media)
++ void addWatchedSeries(AMedia media)
+- int findMovieID(AMedia media)
+- int findSeriesID(AMedia media)
+- int findUserID()
+}
 class Search{
 - Scanner scanner
 - ArrayList<AMedia> allMovies
@@ -29,20 +51,29 @@ class Search{
 - ArrayList<String> allCategories
 + Search(ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries, ArrayList<String> allCategories)
 + void searchEngine()
+- AMedia searchMovies(ArrayList<AMedia> allMovies)
+- AMedia searchSeries(ArrayList<AMedia> allSeries)
+- void searchByMediaName(ArrayList<AMedia> listOfMedia)
+- void searchByCategory(ArrayList<AMedia> listOfMedia, ArrayList<String> allCategories)
+- void searchByChosenCategory(String chosenCategory, ArrayList<AMedia> listOfMedia)
+- void searchByRating(ArrayList<AMedia> media)
+- void searchByYear(ArrayList<AMedia> media)
 + void searchBySavedMedia()
 + void searchByWatchedMedia()
 }
 class ProgramControl{
 - ArrayList<User> allUsers
 - ArrayList<AMedia> allMedia
-+ static MainMenu mainMenu
 + static User currentUser
++ static MainMenu mainMenu
++ static DataHandling dataHandling
++ static boolean usingDatabase
 + void runProgram()
 }
 
 class StartMenu{
-- Scanner scanner
 - ArrayList<User> allUsers
+- Scanner scanner
 + StartMenu(ArrayList<User> allUsers)
 + User runStartMenu()
 - User login()
@@ -60,23 +91,25 @@ class MainMenu{
 + MainMenu(ArrayList<User> allUsers, ArrayList<AMedia> allMovies, ArrayList<AMedia> allSeries)
 + void runMainMenu()
 - void suggestedMedia()
+- AMedia getRandomMediaFromCategory(String category, ArrayList<AMedia> allMoviesAltered)
+- String getRandomCategory(String[] lastPlayedCategories)
 - void logOut()
 - void userOptions()
 }
 
 abstract class AMedia{
-- String name
-- String category
-- float rating
-- int releaseYear
-- Scanner sc
-+ AMedia(String name, String category, float rating, int releaseYear)
-# abstract void playMedia(AMedia media)
-+ void chooseMedia()
+  Scanner sc
+# String name
+# String category
+# float rating
+# int releaseYear
+  AMedia(String name, String category, float rating, int releaseYear)
 + String getName()
 + String getCategory()
 + float getRating()
 + int getReleaseYear()
+# {abstract} void playMedia(AMedia media)
++ void chooseMedia()
 }
 
 class Movie{
@@ -89,6 +122,10 @@ class Series{
 - int episode
 - int endYear
 + Series (String name, String category, float rating, int releaseYear, int season, int episode, int endYear)
++ String getDatabaseName()
++ int getEpisode()
++ int getSeason()
++ int getEndYear()
 + void playMedia()
 }
 
@@ -112,11 +149,11 @@ class User{
 }
 
 class FileHandling{
-+ static ArrayList<String> readFromCategoryFile(string path)
-+ static ArrayList<AMedia> readFromMovieFile(String path)
-+ static ArrayList<AMedia> readFromSeriesFile(String path)
-+ static ArrayList<User> readFromUserFile(String path, ArrayList<AMedia> allMedia)
-+ static void writeToUserFile(String path, ArrayList<User> allUsers)
++ ArrayList<AMedia> readMovieData(String path)
++ ArrayList<AMedia> readSeriesData(String path)
++ ArrayList<User> readUserData(String path, ArrayList<AMedia> allMedia)
++ void writeUserData(String path, ArrayList<User> allUsers)
++ ArrayList<String> readCategoryData(String path)
 }
 
 @enduml

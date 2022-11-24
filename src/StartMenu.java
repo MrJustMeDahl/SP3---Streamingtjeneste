@@ -7,9 +7,9 @@ Scanner scanner = new Scanner(System.in);
 
 public StartMenu(ArrayList<User> allUsers){
 this.allUsers = allUsers;
-
-
 }
+
+
 //******
 //StartMenu Choose to login or create new user
 //******

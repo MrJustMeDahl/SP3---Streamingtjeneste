@@ -6,7 +6,7 @@ public class DatabaseHandling implements DataHandling{
     public Connection connection;
     private String url = "jdbc:mysql://localhost/mediadata?" + "autoReconnect=true&useSSL=false";
     private String username = "root";
-    private String password = "cph-nr135";
+    private String password = "030317Oj";
     public boolean isDatabaseOnline = false;
 
     public DatabaseHandling(){

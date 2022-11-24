@@ -131,7 +131,6 @@ public class MainMenu {
     }
 
     public void logOut() {
-        ProgramControl.dataHandling.writeUserData("Data/UserData.txt", allUsers);
         System.out.println("We look forward to see you again!");
         try {
             sleep(5000);
